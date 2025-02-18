@@ -1,0 +1,40 @@
+<!-- Modal Cadastro Paciente -->
+<div class="modal fade" id="modalCadastroPaciente" tabindex="-1" aria-labelledby="modalCadastroPacienteLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen-lg-down">
+        <div class="modal-content container mt-5">
+            <div class="modal-header d-flex justify-content-between">
+                <h1 class="modal-title fs">Cadastrar Paciente</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            </div>
+            <div class="modal-body">
+                <form class="form-control" action="" method="">
+                    <div class="form-group mb-3">
+                        <label class="form-label" for="nome">Nome</label>
+                        <input class="form-control" type="text" id="nome" placeholder="Escreva seu nome completo" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="form-label" for="cpf">CPF</label>
+                        <input class="form-control" type="text" id="cpf" placeholder="000.000.000-00" maxlength="14" required>
+                    </div>
+                    <div class="row form-group mb-3">
+                        <div class="col">
+                            <label class="form-label" for="sexo">Selecione seu sexo:</label>
+                            <select class="form-select" id="sexo" name="sexo">
+                                <option value="F">F</option>
+                                <option value="M">M</option>
+                            </select>
+                        </div>
+
+                        <div class="col">
+                            <label class="form-label" for="data">Data de nascimento:</label>
+                            <input class="form-control" type="date" name="data" id="data" required>
+                        </div>
+                    </div>
+                    <div class="d-grid col-6 mx-auto">
+                        <button class=" mb-3 btn btn-success" type="submit">Cadastrar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
