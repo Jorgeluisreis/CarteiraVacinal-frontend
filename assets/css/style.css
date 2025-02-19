@@ -113,3 +113,48 @@ body {
 .search-form button:hover {
     background-color: #2a8a21;
 }
+
+/* Adicionando estilização para os desenvolvedores */
+.desenvolvedores-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 30px;
+    margin-top: 20px;
+    justify-items: center;
+}
+
+.lider-tecnico {
+    grid-column: span 3;
+    text-align: center;
+    background-color: #f8f8f8;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.desenvolvedores {
+    text-align: center;
+    background-color: #f8f8f8;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.desenvolvedores img {
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.icones a {
+    margin: 0 5px;
+}
+
+.icones img {
+    transition: transform 0.3s;
+}
+
+.icones img:hover {
+    transform: scale(1.2);
+}
+
+h3, h4 {
+    color: var(--primary-color);
+}
