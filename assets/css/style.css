@@ -4,7 +4,6 @@
     --background-color: white;
 }
 
-/* Estilização geral */
 body {
     background-color: var(--background-color);
     font-family: Arial, sans-serif;
@@ -12,7 +11,6 @@ body {
     padding: 0;
 }
 
-/* Navbar */
 .navbar {
     background-color: var(--primary-color);
     padding: 10px 0;
@@ -37,7 +35,6 @@ body {
     background-color: rgba(255, 255, 255, 0.2);
 }
 
-/* Dropdown */
 .dropdown {
     position: relative;
     display: inline-block;
@@ -77,7 +74,6 @@ body {
     display: block;
 }
 
-/* Hero Section */
 .hero {
     display: flex;
     justify-content: center;
@@ -114,7 +110,6 @@ body {
     background-color: #2a8a21;
 }
 
-/* Adicionando estilização para os desenvolvedores */
 .desenvolvedores-container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
