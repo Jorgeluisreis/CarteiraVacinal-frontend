@@ -4,30 +4,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carteira Vacinal</title>
+    <title>Tela inicial</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+</head>
 </head>
 
-<body>
+<body class="home">
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const images = document.querySelectorAll(".hidden");
+
+            function handleScroll() {
+                images.forEach((img) => {
+                    const imgPosition = img.getBoundingClientRect().top;
+                    const windowHeight = window.innerHeight;
+
+                    if (imgPosition < windowHeight - 100) {
+                        img.classList.add("show");
+                    }
+                });
+            }
+
+            window.addEventListener("scroll", handleScroll);
+            handleScroll(); 
+        });
+    </script>
 
     <div id="headerContainer"></div>
 
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Carteira Vacinal</h1>
-            <form class="search-form">
-                <input type="search" id="buscar-paciente" name="buscar-paciente" placeholder="Buscar paciente...">
-                <button type="submit">Buscar</button>
-            </form>
-        </div>
-    </section>
-
     <div id="modalContainer"></div>
 
-    <div id="footerContainer"></div>
+
+
+    <section class="slogan">
+        <h1 class="titulo">Carteira Vacinal</h1>
+        <p class="texto-slogan">Um jeito simples de ter controle sobre as suas imunizações</p>
+    </section>
+
     
+    <div class="textos">
+        <section class="section1">
+            <img class="hidden" src="../img/inicio1.jpg"
+                alt="Ilustração de uma paciente demonstrando que tomou a vacina">
+            <div class="hidden">
+                <h2 >Controle Vacinal</h2>
+                <p>Aqui, há a praticidade de ter controle de vacinas pendentes e a serem
+                    aplicadas</p>
+            </div>
+        </section>
+
+        <section class="section2">
+            <div class="hidden">
+                <h2>Monitoramento</h2>
+                <p>Monitore as imunizações de perto, protegendo você e sua família</p>
+            </div>
+            <img class="hidden" src="../img/inicio2.jpg" alt="Ilustração de mãe e filha abraçadas">
+        </section>
+
+        <section class="section3">
+            <img class="hidden" src="../img/inicio3.jpg" alt="Ilustração de uma consulta médica">
+            <div class="hidden">
+                <h2>Facilidade de Acesso e Compartilhamento</h2>
+                <p>Acesse seu histórico de vacinas a qualquer momento e qualquer lugar tornando
+                    mais fácil o compartilhamento com médicos, escolas e empregadores</p>
+            </div>
+        </section>
+
+        <section class="section4">
+            <div class="hidden">
+                <h2>Educação e Conscientização</h2>
+                <p>Tenha informações sobre cada vacina, seus benefícios e faixa etária
+                    recomendada
+                    para aplicação</p>
+            </div>
+            <img class="hidden" src="../img/inicio4.jpg" alt="Ilustração de uma criança tomando vacina">
+        </section>
+    </div>
+
+
+    <div id="footerContainer"></div>
+
     <script>
         fetch("/components/header.html")
             .then(response => response.text())
@@ -48,10 +112,11 @@
                 document.getElementById("footerContainer").innerHTML = html;
             })
             .catch(error => console.error("Erro ao carregar o footer:", error));
-            
+
     </script>
 
-    
+
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

@@ -4,16 +4,19 @@
     --background-color: white;
 }
 
-
+.home{
+    font-family: Arial, sans-serif;
+    background-color: #ffffef;
+;}
 
 body {
-    background-color: var(--background-color );
+    background-color: #ffffef;
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
 }
 
-.rodape{
+.rodape {
     position: fixed;
     left: 0;
     bottom: 0;
@@ -27,6 +30,13 @@ body {
     background-color: var(--primary-color);
     padding: 10px 0;
     display: flex;
+}
+
+.logo{
+    max-width: 55px; 
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .nav-container {
@@ -123,12 +133,12 @@ body {
 }
 
 
-.titulo{
+.titulo {
     text-align: center;
     margin: 22px auto;
 }
 
-.texto_decoracao{
+.texto_decoracao {
     width: 700px;
     text-align: center;
     margin: auto;
@@ -136,13 +146,13 @@ body {
     flex-direction: column;
 }
 
-.apresentacao{
+.apresentacao {
     display: flex;
     margin: auto;
 
 }
 
-.equipes{
+.equipes {
     display: flex;
     justify-content: center;
     gap: 50px;
@@ -181,3 +191,65 @@ body {
 .icones img:hover {
     transform: scale(1.2);
 }
+
+.slogan {
+    font-family: Arial, sans-serif;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 75px;
+    gap: 5px;
+}
+
+.slogan h1 {
+    font-size: 50px;
+}
+
+.slogan p {
+    font-size: 20px;
+    margin-bottom: 2%;
+}
+
+.textos h2{
+    font-size: 30px;
+}
+
+.textos p{
+    font-size: 18px;
+}
+
+.section1, .section3 {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 20px; 
+    justify-content: flex-start;
+    margin: 5%;
+    padding: 10px;
+}
+
+.section2, .section4 {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    justify-content: flex-end;
+    margin: 5%;
+    padding: 10px;
+}
+
+
+
+.hidden {
+    width: 40%;
+    max-width: 630px;
+    border-radius: 2%;
+    opacity: 0;
+    transform: translateX(-100%); 
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.show {
+    opacity: 1;
+    transform: translateX(0); 
+}
+
