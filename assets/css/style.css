@@ -253,3 +253,7 @@ body {
     transform: translateX(0); 
 }
 
+.table-center th, .table-center td {
+    text-align: center;
+    vertical-align: middle;
+}
