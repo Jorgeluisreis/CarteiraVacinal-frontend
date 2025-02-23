@@ -1,16 +1,52 @@
-function toggleDropdown() {
-  var dropdown = document.getElementById("dropdownMenu");
-  dropdown.classList.toggle("show");
+let timeoutId;
+let activeDropdown = null;
+
+function abrirDropdown(event) {
+    const button = event.target;
+    const dropdown = button.nextElementSibling;
+
+    clearTimeout(timeoutId);
+    
+    if (activeDropdown && activeDropdown !== dropdown) {
+        activeDropdown.classList.remove("show");
+    }
+
+    dropdown.classList.add("show");
+    activeDropdown = dropdown;
 }
 
-window.onclick = function(event) {
-  if (!event.target.matches('.dropdown-btn') && !event.target.matches('.dropdown-content a')) {
-      var dropdown = document.getElementById("dropdownMenu");
-      if (dropdown.classList.contains("show")) {
-          dropdown.classList.remove("show");
-      }
-  }
+function fecharDropdown(dropdown) {
+    timeoutId = setTimeout(() => {
+        dropdown.classList.remove("show");
+        if (activeDropdown === dropdown) {
+            activeDropdown = null;
+        }
+    }, 300); 
 }
+
+
+function manterDropdownAberto(event) {
+    clearTimeout(timeoutId);
+}
+
+
+const dropdownButtons = document.querySelectorAll('.dropdown-btn');
+dropdownButtons.forEach(button => {
+    const dropdown = button.nextElementSibling;
+
+    button.addEventListener('mouseenter', abrirDropdown);
+    button.addEventListener('mouseleave', () => fecharDropdown(dropdown));
+
+    dropdown.addEventListener('mouseenter', manterDropdownAberto);
+    dropdown.addEventListener('mouseleave', () => fecharDropdown(dropdown));
+});
+
+document.addEventListener('mouseleave', () => {
+    if (activeDropdown) {
+        activeDropdown.classList.remove("show");
+        activeDropdown = null;
+    }
+});
 
 function abrirModalCadastroPaciente(event) {
   event.preventDefault();
