@@ -52,6 +52,13 @@
                 })
                 .catch(error => console.error("Erro ao carregar o modal de exclusão:", error));
 
+            fetch("/components/modal_editar_paciente.html")
+                .then(response => response.text())
+                .then(html => {
+                    document.body.insertAdjacentHTML('beforeend', html);
+                })
+                .catch(error => console.error("Erro ao carregar o modal de edição:", error));
+
             fetch("/components/toast_generic.html")
                 .then(response => response.text())
                 .then(html => {

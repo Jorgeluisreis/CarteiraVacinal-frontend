@@ -209,12 +209,13 @@ function fecharModal(modalId) {
 }
 
 async function listarPacientes(id) {
+    let urlConsulta = url + "/paciente/consultar";
     if (id) {
-        url += `/${id}`;
+        urlConsulta += `/${id}`;
     }
 
     try {
-        const response = await fetch(url+"/paciente/consultar", {
+        const response = await fetch(urlConsulta, {
             method: "GET",
             headers: {
                 "Accept": "application/json"
@@ -223,11 +224,19 @@ async function listarPacientes(id) {
         });
 
         if (!response.ok) {
+            if (response.status === 500) {
+                exibirMensagem("Não Localizado", "info");
+                return;
+            }
             throw new Error(`Erro na API: ${response.status} - ${response.statusText}`);
         }
 
         const data = await response.json();
-        exibirPacientes(data);
+        if (data.length === 0 || (id && !data.id)) {
+            exibirMensagem("Não Localizado", "info");
+        } else {
+            exibirPacientes(data);
+        }
     } catch (error) {
         console.error("Erro ao listar pacientes:", error);
         exibirMensagem(`Erro ao listar pacientes: ${error.message}`, "error");
@@ -287,17 +296,95 @@ function formatarData(data) {
 
 function exibirMensagem(mensagem, tipo) {
     const mensagemContainer = document.createElement("div");
-    mensagemContainer.className = `alert alert-${tipo === "success" ? "success" : "danger"}`;
+    mensagemContainer.className = `alert alert-${tipo === "success" ? "success" : tipo === "info" ? "info" : "danger"}`;
     mensagemContainer.textContent = mensagem;
 
     const resultContainer = document.getElementById("resultContainer");
-    resultContainer.prepend(mensagemContainer);
+    resultContainer.innerHTML = "";
+    resultContainer.appendChild(mensagemContainer);
 
     setTimeout(() => mensagemContainer.remove(), 5000);
 }
 
+function formatarDataParaInput(data) {
+    const [dia, mes, ano] = data.split("-");
+    return `${ano}-${mes}-${dia}`;
+}
+
 function editarPaciente(id) {
-    console.log(`Editar paciente com ID: ${id}`);
+    fetch(url+`/paciente/consultar/${id}`)
+        .then(response => response.json())
+        .then(paciente => {
+            document.getElementById("editarNome").value = paciente.nome;
+            document.getElementById("editarCpf").value = paciente.cpf;
+            document.getElementById("editarSexo").value = paciente.sexo;
+            document.getElementById("editarData").value = formatarDataParaInput(paciente.dataNascimento);
+
+            const btnEditarPaciente = document.getElementById("btnEditarPaciente");
+            btnEditarPaciente.onclick = function() {
+                atualizarPaciente(id);
+            };
+
+            const modalEditarPaciente = new bootstrap.Modal(document.getElementById("modalEditarPaciente"));
+            modalEditarPaciente.show();
+        })
+        .catch(error => {
+            console.error("Erro ao carregar os dados do paciente:", error);
+            exibirToast(`Erro ao carregar os dados do paciente: ${error.message}`);
+        });
+}
+
+async function atualizarPaciente(id) {
+    const nome = document.getElementById("editarNome").value.trim();
+    const cpf = document.getElementById("editarCpf").value.trim();
+    const sexo = document.getElementById("editarSexo").value;
+    const dataNascimento = document.getElementById("editarData").value;
+
+    const pacienteData = {
+        nome,
+        cpf,
+        sexo,
+        dataNascimento: formatarDataParaEnvio(dataNascimento)
+    };
+
+    try {
+        const response = await fetch(url+`/paciente/alterar/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify(pacienteData),
+            mode: "cors"
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || `Erro na API: ${response.status} - ${response.statusText}`);
+        }
+
+        const successMessage = data.message || "Paciente atualizado com sucesso!";
+        console.log("Resposta da API:", data);
+        exibirToast(successMessage);
+
+        const modalEditarPaciente = bootstrap.Modal.getInstance(document.getElementById("modalEditarPaciente"));
+        if (modalEditarPaciente) {
+            modalEditarPaciente.hide();
+        }
+
+        listarPacientes();
+    } catch (error) {
+        let errorMessage = "Erro ao atualizar paciente.";
+        if (error instanceof SyntaxError) {
+            errorMessage = "Erro ao processar a resposta da API.";
+        } else if (error.message) {
+            errorMessage = error.message;
+        }
+
+        console.error("Erro ao atualizar paciente:", errorMessage);
+        exibirToast(`Erro ao atualizar paciente: ${errorMessage}`);
+    }
 }
 
 function confirmarExclusao(id, nome) {
@@ -358,4 +445,9 @@ function exibirToast(mensagem) {
 
     const toastGeneric = new bootstrap.Toast(document.getElementById("toastGeneric"));
     toastGeneric.show();
+}
+
+function formatarDataParaEnvio(data) {
+    const [ano, mes, dia] = data.split("-");
+    return `${dia}-${mes}-${ano}`;
 }
