@@ -7,7 +7,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
             </div>
             <div class="modal-body">
-                <form class="form-control" action="" method="">
+                <form id="formCadastroPaciente"> <!-- Remova o action e method -->
                     <div class="form-group mb-3">
                         <label class="form-label" for="nome">Nome</label>
                         <input class="form-control" type="text" id="nome" placeholder="Escreva seu nome completo" required>
@@ -31,7 +31,7 @@
                         </div>
                     </div>
                     <div class="d-grid col-6 mx-auto">
-                        <button class=" mb-3 btn btn-success" type="submit">Cadastrar</button>
+                        <button id="btnCadastrar" class="mb-3 btn btn-success" type="button">Cadastrar</button> <!-- Mude para type="button" -->
                     </div>
                 </form>
             </div>
