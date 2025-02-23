@@ -209,13 +209,12 @@ function fecharModal(modalId) {
 }
 
 async function listarPacientes(id) {
-    let url = "https://apicarteiravacinal.jorgedev.net/paciente/consultar";
     if (id) {
         url += `/${id}`;
     }
 
     try {
-        const response = await fetch(url, {
+        const response = await fetch(url+"/paciente/consultar", {
             method: "GET",
             headers: {
                 "Accept": "application/json"
@@ -316,7 +315,7 @@ function confirmarExclusao(id, nome) {
 
 async function excluirPaciente(id) {
     try {
-        const response = await fetch(`https://apicarteiravacinal.jorgedev.net/paciente/excluir/${id}`, {
+        const response = await fetch(url+`/paciente/excluir/${id}`, {
             method: "DELETE",
             headers: {
                 "Accept": "application/json"
@@ -332,7 +331,7 @@ async function excluirPaciente(id) {
 
         const successMessage = data.message || "Paciente excluído com sucesso!";
         console.log("Resposta da API:", data);
-        exibirToast(successMessage, "success");
+        exibirToast(successMessage);
 
         const modalConfirmarExclusao = bootstrap.Modal.getInstance(document.getElementById("modalConfirmarExclusao"));
         if (modalConfirmarExclusao) {
@@ -349,14 +348,14 @@ async function excluirPaciente(id) {
         }
 
         console.error("Erro ao excluir paciente:", errorMessage);
-        exibirToast(`Erro ao excluir paciente: ${errorMessage}`, "error");
+        exibirToast(`Erro ao excluir paciente: ${errorMessage}`);
     }
 }
 
-function exibirToast(mensagem, tipo) {
+function exibirToast(mensagem) {
     const toastMensagem = document.getElementById("toastMensagem");
     toastMensagem.textContent = mensagem;
 
-    const toastExclusao = new bootstrap.Toast(document.getElementById("toastExclusao"));
-    toastExclusao.show();
+    const toastGeneric = new bootstrap.Toast(document.getElementById("toastGeneric"));
+    toastGeneric.show();
 }

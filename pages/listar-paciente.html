@@ -29,37 +29,6 @@
 
     <div id="footerContainer"></div>
 
-    <!-- Modal de confirmação de exclusão -->
-    <div class="modal fade" id="modalConfirmarExclusao" tabindex="-1" aria-labelledby="modalConfirmarExclusaoLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalConfirmarExclusaoLabel">Confirmar Exclusão</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
-                </div>
-                <div class="modal-body">
-                    <p id="mensagemConfirmacao"></p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
-                    <button type="button" class="btn btn-danger" id="btnConfirmarExclusao">Sim</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Toast de confirmação -->
-    <div class="toast-container position-fixed bottom-0 end-0 p-3">
-        <div id="toastExclusao" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="toast-header">
-                <strong class="me-auto">Notificação</strong>
-                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-            <div class="toast-body" id="toastMensagem">
-            </div>
-        </div>
-    </div>
-
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             fetch("/components/header.html")
@@ -75,6 +44,20 @@
                     document.getElementById("footerContainer").innerHTML = html;
                 })
                 .catch(error => console.error("Erro ao carregar o footer:", error));
+
+            fetch("/components/modal_exclusao_paciente.html")
+                .then(response => response.text())
+                .then(html => {
+                    document.body.insertAdjacentHTML('beforeend', html);
+                })
+                .catch(error => console.error("Erro ao carregar o modal de exclusão:", error));
+
+            fetch("/components/toast_generic.html")
+                .then(response => response.text())
+                .then(html => {
+                    document.body.insertAdjacentHTML('beforeend', html);
+                })
+                .catch(error => console.error("Erro ao carregar o toast:", error));
 
             document.getElementById("btnPesquisar").addEventListener("click", function () {
                 const searchId = document.getElementById("searchId").value.trim();

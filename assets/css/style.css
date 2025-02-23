@@ -44,6 +44,10 @@ body {
     gap: 20px;
 }
 
+.container {
+    padding-bottom: 100px;
+}
+
 .nav-item {
     color: var(--text-color);
     text-decoration: none;
