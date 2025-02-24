@@ -275,6 +275,50 @@ async function listarImunizacoes() {
     }
 }
 
+async function listarImunizacoesPorId(id) {
+    try {
+        const response = await fetch(url + `/imunizacao/consultar/${id}`, {
+            method: "GET",
+            headers: {
+                "Accept": "application/json"
+            },
+            mode: "cors"
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erro na API: ${response.status} - ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        exibirImunizacoes(data);
+    } catch (error) {
+        console.error("Erro ao listar imunizações por ID:", error);
+        exibirToast(`Erro ao listar imunizações por ID: ${error.message}`);
+    }
+}
+
+async function listarImunizacoesPorPaciente(id) {
+    try {
+        const response = await fetch(url + `/imunizacao/consultar/paciente/${id}`, {
+            method: "GET",
+            headers: {
+                "Accept": "application/json"
+            },
+            mode: "cors"
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erro na API: ${response.status} - ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        exibirImunizacoes(data);
+    } catch (error) {
+        console.error("Erro ao listar imunizações por paciente:", error);
+        exibirToast(`Erro ao listar imunizações por paciente: ${error.message}`);
+    }
+}
+
 function exibirImunizacoes(imunizacoes) {
     const resultContainer = document.getElementById("resultContainer");
     if (!resultContainer) {
@@ -290,14 +334,14 @@ function exibirImunizacoes(imunizacoes) {
     thead.innerHTML = `
         <tr>
             <th>ID</th>
-            <th>Paciente</th>
+            <th>Nome</th>
             <th>Vacina</th>
+            <th>Dose</th>
             <th>Data de Aplicação</th>
             <th>Fabricante</th>
             <th>Lote</th>
             <th>Local de Aplicação</th>
             <th>Profissional Aplicador</th>
-            <th>Ações</th>
         </tr>
     `;
     table.appendChild(thead);
@@ -307,17 +351,14 @@ function exibirImunizacoes(imunizacoes) {
         const tr = document.createElement("tr");
         tr.innerHTML = `
             <td>${imunizacao.id}</td>
-            <td>${imunizacao.paciente.nome}</td>
-            <td>${imunizacao.vacina.vacina} - ${imunizacao.vacina.dose}</td>
+            <td>${imunizacao.nome}</td>
+            <td>${imunizacao.vacina}</td>
+            <td>${imunizacao.dose}</td>
             <td>${formatarData(imunizacao.dataAplicacao)}</td>
             <td>${imunizacao.fabricante}</td>
             <td>${imunizacao.lote}</td>
             <td>${imunizacao.localAplicacao}</td>
             <td>${imunizacao.profissionalAplicador}</td>
-            <td>
-                <button class="btn btn-warning btn-sm" onclick="editarImunizacao(${imunizacao.id})">Editar</button>
-                <button class="btn btn-danger btn-sm" onclick="confirmarExclusaoImunizacao(${imunizacao.id})">Excluir</button>
-            </td>
         `;
         tbody.appendChild(tr);
     });

@@ -136,6 +136,11 @@ body {
     background-color: var(--primary-color);
 }
 
+.form-check-input {
+    width: 1.25em;
+    height: 1.25em;
+    border-radius: 0;
+}
 
 .titulo {
     text-align: center;
@@ -170,7 +175,6 @@ body {
     margin-top: 20px;
     justify-items: center;
 }
-
 
 .desenvolvedores {
     text-align: center;
@@ -240,8 +244,6 @@ body {
     margin: 5%;
     padding: 10px;
 }
-
-
 
 .hidden {
     width: 40%;

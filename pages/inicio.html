@@ -39,8 +39,6 @@
 
     <div id="headerContainer"></div>
 
-    <div id="modalContainer"></div>
-
     <section class="slogan">
         <h1 class="titulo">Carteira Vacinal</h1>
         <p class="texto-slogan">Um jeito simples de ter controle sobre as suas imunizações</p>
@@ -118,13 +116,6 @@
                 document.getElementById("footerContainer").innerHTML = html;
             })
             .catch(error => console.error("Erro ao carregar o footer:", error));
-
-        fetch("/components/toast_generic.html")
-            .then(response => response.text())
-            .then(html => {
-                document.body.insertAdjacentHTML('beforeend', html);
-            })
-            .catch(error => console.error("Erro ao carregar o toast:", error));
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
