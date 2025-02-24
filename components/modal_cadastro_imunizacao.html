@@ -1,0 +1,49 @@
+<div class="modal fade" id="modalCadastroImunizacao" tabindex="-1" aria-labelledby="modalCadastroImunizacaoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen-lg-down">
+        <div class="modal-content container mt-5">
+            <div class="modal-header d-flex justify-content-between">
+                <h1 class="modal-title fs">Cadastrar Imunização</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formCadastroImunizacao">
+                    <div class="form-group mb-3">
+                        <label class="form-label" for="paciente">Paciente</label>
+                        <select class="form-select" id="paciente" required>
+                            <option value="" disabled selected>Escolha o paciente</option>
+                        </select>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="form-label" for="vacina">Vacina</label>
+                        <select class="form-select" id="vacina" required>
+                            <option value="" disabled selected>Escolha a vacina - dose</option>
+                        </select>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="form-label" for="dataAplicacao">Data de Aplicação</label>
+                        <input class="form-control" type="date" id="dataAplicacao" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="form-label" for="fabricante">Fabricante</label>
+                        <input class="form-control" type="text" id="fabricante">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="form-label" for="lote">Lote</label>
+                        <input class="form-control" type="text" id="lote">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="form-label" for="localAplicacao">Local da Aplicação</label>
+                        <input class="form-control" type="text" id="localAplicacao">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="form-label" for="profissionalAplicador">Profissional Aplicador</label>
+                        <input class="form-control" type="text" id="profissionalAplicador">
+                    </div>
+                    <div class="d-grid col-6 mx-auto">
+                        <button id="btnCadastrarImunizacao" class="mb-3 btn btn-success" type="button">Cadastrar Imunização</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

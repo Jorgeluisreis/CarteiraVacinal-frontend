@@ -51,66 +51,289 @@ document.addEventListener('mouseleave', () => {
 function abrirModalCadastroPaciente(event) {
     event.preventDefault();
 
-    console.log("Abrindo modal de cadastro de paciente...");
-
     fetch("/components/modal_cadastro_paciente.html")
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("Erro ao carregar o modal: " + response.statusText);
-            }
-            return response.text();
-        })
+        .then(response => response.text())
         .then(html => {
-            console.log("Modal carregado com sucesso!");
             document.getElementById("modalContainer").innerHTML = html;
 
-            var modalElement = document.getElementById('modalCadastroPaciente');
-            if (modalElement) {
-                var modal = new bootstrap.Modal(modalElement);
-                modal.show();
+            const modalElement = document.getElementById('modalCadastroPaciente');
+            const modal = new bootstrap.Modal(modalElement);
+            modal.show();
 
-                const btnCadastrar = document.getElementById("btnCadastrar");
-                if (btnCadastrar) {
-                    btnCadastrar.addEventListener("click", (event) => {
-                        event.preventDefault();
-                        console.log("Botão 'Cadastrar' clicado!");
-
-                        cadastrarPaciente();
-                    });
-                } else {
-                    console.error("Botão 'Cadastrar' não encontrado no modal.");
-                }
-            } else {
-                console.error("Erro: Modal não encontrado no conteúdo carregado.");
-            }
+            const btnCadastrar = document.getElementById("btnCadastrar");
+            btnCadastrar.addEventListener("click", (event) => {
+                event.preventDefault();
+                cadastrarPaciente();
+            });
         })
-        .catch(error => {
-            console.error("Erro ao carregar o modal:", error);
-        });
+        .catch(error => console.error("Erro ao carregar o modal de cadastro de paciente:", error));
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("DOM completamente carregado.");
-
     const btnAbrirModal = document.getElementById("btnAbrirModalCadastro");
     if (btnAbrirModal) {
         btnAbrirModal.addEventListener("click", abrirModalCadastroPaciente);
-    } else {
-        console.error("Botão para abrir o modal não encontrado no DOM.");
     }
 });
+
+function abrirModalCadastroImunizacao(event) {
+    event.preventDefault();
+
+    fetch("/components/modal_cadastro_imunizacao.html")
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById("modalContainer").innerHTML = html;
+
+            const modalElement = document.getElementById('modalCadastroImunizacao');
+            const modal = new bootstrap.Modal(modalElement);
+            modal.show();
+
+            carregarPacientes();
+            carregarVacinas();
+
+            const btnCadastrarImunizacao = document.getElementById("btnCadastrarImunizacao");
+            btnCadastrarImunizacao.addEventListener("click", (event) => {
+                event.preventDefault();
+                cadastrarImunizacao();
+            });
+        })
+        .catch(error => console.error("Erro ao carregar o modal de cadastro de imunização:", error));
+}
+
+function carregarPacientes() {
+    fetch(url + "/paciente/consultar")
+        .then(response => response.json())
+        .then(pacientes => {
+            const pacienteSelect = document.getElementById("paciente");
+            pacientes.forEach(paciente => {
+                const option = document.createElement("option");
+                option.value = paciente.id;
+                option.textContent = paciente.nome;
+                pacienteSelect.appendChild(option);
+            });
+        })
+        .catch(error => console.error("Erro ao carregar pacientes:", error));
+}
+
+function carregarVacinas() {
+    fetch(url + "/vacinas/consultar")
+        .then(response => response.json())
+        .then(vacinas => {
+            const vacinaSelect = document.getElementById("vacina");
+            vacinas.forEach(vacina => {
+                const option = document.createElement("option");
+                option.value = vacina.id;
+                option.textContent = `${vacina.vacina} - ${vacina.dose}`;
+                vacinaSelect.appendChild(option);
+            });
+        })
+        .catch(error => console.error("Erro ao carregar vacinas:", error));
+}
+
+async function cadastrarImunizacao() {
+    const imunizacaoData = obterDadosImunizacao();
+    if (!imunizacaoData) {
+        return;
+    }
+
+    try {
+        const response = await fetch(url + "/imunizacao/inserir", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify(imunizacaoData),
+            mode: "cors"
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            if (response.status === 409) {
+                exibirToast(data.message || "Este paciente já possui esta imunização cadastrada.");
+                return;
+            }
+        }
+
+        exibirToast(data.message || "Imunização cadastrada com sucesso!");
+
+        const modalCadastroImunizacao = bootstrap.Modal.getInstance(document.getElementById("modalCadastroImunizacao"));
+        if (modalCadastroImunizacao) {
+            modalCadastroImunizacao.hide();
+        }
+
+        listarImunizacoes();
+    } catch (error) {
+        console.error("Erro ao cadastrar imunização:", error);
+        exibirToast(`Erro ao cadastrar imunização: ${error.message}`);
+    }
+}
+
+function obterDadosImunizacao() {
+    const idPaciente = document.getElementById("paciente").value;
+    const idDose = document.getElementById("vacina").value;
+    const dataAplicacao = document.getElementById("dataAplicacao").value;
+    const fabricante = document.getElementById("fabricante").value.trim();
+    const lote = document.getElementById("lote").value.trim();
+    const localAplicacao = document.getElementById("localAplicacao").value.trim();
+    const profissionalAplicador = document.getElementById("profissionalAplicador").value.trim();
+
+    if (!idPaciente || !idDose || !dataAplicacao) {
+        exibirToast("Os campos Paciente, Vacina e Data de Aplicação são obrigatórios.");
+        return null;
+    }
+
+    const dataAplicacaoFormatada = formatarDataParaEnvio(dataAplicacao);
+
+    return { idPaciente, idDose, dataAplicacao: dataAplicacaoFormatada, fabricante, lote, localAplicacao, profissionalAplicador };
+}
+
+async function listarVacinas() {
+    try {
+        const response = await fetch(url + "/vacinas/consultar", {
+            method: "GET",
+            headers: {
+                "Accept": "application/json"
+            },
+            mode: "cors"
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erro na API: ${response.status} - ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        exibirVacinas(data);
+    } catch (error) {
+        console.error("Erro ao listar vacinas:", error);
+        exibirToast(`Erro ao listar vacinas: ${error.message}`);
+    }
+}
+
+function exibirVacinas(vacinas) {
+    const resultContainer = document.getElementById("resultContainer");
+    if (!resultContainer) {
+        console.warn("Elemento resultContainer não encontrado no DOM.");
+        return;
+    }
+    resultContainer.innerHTML = "";
+
+    const table = document.createElement("table");
+    table.className = "table table-striped table-center";
+
+    const thead = document.createElement("thead");
+    thead.innerHTML = `
+        <tr>
+            <th>ID</th>
+            <th>Vacina</th>
+            <th>Dose</th>
+            <th>Idade Recomendada (meses)</th>
+            <th>Limite de Aplicação</th>
+            <th>Público Alvo</th>
+        </tr>
+    `;
+    table.appendChild(thead);
+
+    const tbody = document.createElement("tbody");
+    vacinas.forEach(vacina => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td>${vacina.id}</td>
+            <td>${vacina.vacina}</td>
+            <td>${vacina.dose}</td>
+            <td>${vacina.idadeRecomendadaMeses}</td>
+            <td>${vacina.limiteAplicacao}</td>
+            <td>${vacina.publicoAlvo}</td>
+        `;
+        tbody.appendChild(tr);
+    });
+    table.appendChild(tbody);
+
+    resultContainer.appendChild(table);
+}
+
+async function listarImunizacoes() {
+    try {
+        const response = await fetch(url + "/imunizacao/consultar", {
+            method: "GET",
+            headers: {
+                "Accept": "application/json"
+            },
+            mode: "cors"
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erro na API: ${response.status} - ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        exibirImunizacoes(data);
+    } catch (error) {
+        console.error("Erro ao listar imunizações:", error);
+        exibirToast(`Erro ao listar imunizações: ${error.message}`);
+    }
+}
+
+function exibirImunizacoes(imunizacoes) {
+    const resultContainer = document.getElementById("resultContainer");
+    if (!resultContainer) {
+        console.warn("Elemento resultContainer não encontrado no DOM.");
+        return;
+    }
+    resultContainer.innerHTML = "";
+
+    const table = document.createElement("table");
+    table.className = "table table-striped table-center";
+
+    const thead = document.createElement("thead");
+    thead.innerHTML = `
+        <tr>
+            <th>ID</th>
+            <th>Paciente</th>
+            <th>Vacina</th>
+            <th>Data de Aplicação</th>
+            <th>Fabricante</th>
+            <th>Lote</th>
+            <th>Local de Aplicação</th>
+            <th>Profissional Aplicador</th>
+            <th>Ações</th>
+        </tr>
+    `;
+    table.appendChild(thead);
+
+    const tbody = document.createElement("tbody");
+    imunizacoes.forEach(imunizacao => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td>${imunizacao.id}</td>
+            <td>${imunizacao.paciente.nome}</td>
+            <td>${imunizacao.vacina.vacina} - ${imunizacao.vacina.dose}</td>
+            <td>${formatarData(imunizacao.dataAplicacao)}</td>
+            <td>${imunizacao.fabricante}</td>
+            <td>${imunizacao.lote}</td>
+            <td>${imunizacao.localAplicacao}</td>
+            <td>${imunizacao.profissionalAplicador}</td>
+            <td>
+                <button class="btn btn-warning btn-sm" onclick="editarImunizacao(${imunizacao.id})">Editar</button>
+                <button class="btn btn-danger btn-sm" onclick="confirmarExclusaoImunizacao(${imunizacao.id})">Excluir</button>
+            </td>
+        `;
+        tbody.appendChild(tr);
+    });
+    table.appendChild(tbody);
+
+    resultContainer.appendChild(table);
+}
 
 async function cadastrarPaciente() {
     const pacienteData = obterDadosPaciente();
     if (!pacienteData) {
-        console.warn("Erro: Dados inválidos, abortando envio.");
         return;
     }
 
-    console.log("Enviando os seguintes dados para a API:", JSON.stringify(pacienteData, null, 2));
-
     try {
-        const response = await fetch(url+"/paciente/inserir", {
+        const response = await fetch(url + "/paciente/inserir", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -126,56 +349,41 @@ async function cadastrarPaciente() {
             throw new Error(data.message || `Erro na API: ${response.status} - ${response.statusText}`);
         }
 
-        const successMessage = data.message || "Cadastro realizado com sucesso!";
-        console.log("Resposta da API:", data);
-        exibirMensagem(successMessage, "success");
+        exibirToast(data.message || "Cadastro realizado com sucesso!");
 
-        setTimeout(() => {
-            fecharModal("#modalCadastroPaciente");
-        }, 3000);
+        const modalCadastroPaciente = bootstrap.Modal.getInstance(document.getElementById("modalCadastroPaciente"));
+        if (modalCadastroPaciente) {
+            modalCadastroPaciente.hide();
+        }
+
+        listarPacientes();
     } catch (error) {
-        let errorMessage = "Erro ao cadastrar paciente.";
-        if (error instanceof SyntaxError) {
-            errorMessage = "Erro ao processar a resposta da API.";
-        } else if (error.message) {
-            errorMessage = error.message;
-        }
-
-        try {
-            const errorResponse = await error.json();
-            if (errorResponse && errorResponse.message) {
-                errorMessage = errorResponse.message;
-            }
-        } catch (e) {
-            console.error("Erro ao processar a mensagem de erro da API:", e);
-        }
-
-        console.error("Erro ao cadastrar paciente:", errorMessage);
-        exibirMensagem(`Erro ao cadastrar paciente: ${errorMessage}`, "error");
+        console.error("Erro ao cadastrar paciente:", error);
+        exibirToast(`Erro ao cadastrar paciente: ${error.message}`);
     }
 }
 
 function obterDadosPaciente() {
-    const nome = document.getElementById("nome")?.value.trim();
-    const cpf = document.getElementById("cpf")?.value.trim();
-    const sexo = document.getElementById("sexo")?.value;
-    const dataNascimento = document.getElementById("data")?.value;
+    const nome = document.getElementById("nome").value.trim();
+    const cpf = document.getElementById("cpf").value.trim();
+    const sexo = document.getElementById("sexo").value;
+    const dataNascimento = document.getElementById("data").value;
 
     if (!nome || !cpf || !sexo || !dataNascimento) {
-        exibirMensagem("Todos os campos devem estar preenchidos.", "error");
+        exibirToast("Todos os campos devem estar preenchidos.");
         return null;
     }
 
     const cpfNumeros = cpf.replace(/\D/g, "");
     if (cpfNumeros.length !== 11 || isNaN(cpfNumeros)) {
-        exibirMensagem("O CPF deve conter exatamente 11 números.", "error");
+        exibirToast("O CPF deve conter exatamente 11 números.");
         return null;
     }
 
     const dataNasc = new Date(dataNascimento);
     const dataAtual = new Date();
     if (dataNasc > dataAtual) {
-        exibirMensagem("A data de nascimento não pode estar no futuro.", "error");
+        exibirToast("A data de nascimento não pode estar no futuro.");
         return null;
     }
 
@@ -184,28 +392,7 @@ function obterDadosPaciente() {
     const ano = dataNasc.getFullYear();
     const dataNascimentoFormatada = `${dia}-${mes}-${ano}`;
 
-    console.log("Data formatada:", dataNascimentoFormatada);
-
     return { nome, cpf: cpfNumeros, sexo, dataNascimento: dataNascimentoFormatada };
-}
-
-function exibirMensagem(mensagem, tipo) {
-    const mensagemContainer = document.createElement("div");
-    mensagemContainer.className = `alert alert-${tipo === "success" ? "success" : "danger"}`;
-    mensagemContainer.textContent = mensagem;
-
-    const modalBody = document.querySelector("#modalCadastroPaciente .modal-body");
-    modalBody.prepend(mensagemContainer);
-
-    setTimeout(() => mensagemContainer.remove(), 5000);
-}
-
-function fecharModal(modalId) {
-    const modalElement = document.querySelector(modalId);
-    if (modalElement) {
-        const modal = bootstrap.Modal.getInstance(modalElement);
-        if (modal) modal.hide();
-    }
 }
 
 async function listarPacientes(id) {
@@ -225,7 +412,7 @@ async function listarPacientes(id) {
 
         if (!response.ok) {
             if (response.status === 500) {
-                exibirMensagem("Não Localizado", "info");
+                exibirToast("Não Localizado");
                 return;
             }
             throw new Error(`Erro na API: ${response.status} - ${response.statusText}`);
@@ -233,13 +420,13 @@ async function listarPacientes(id) {
 
         const data = await response.json();
         if (data.length === 0 || (id && !data.id)) {
-            exibirMensagem("Não Localizado", "info");
+            exibirToast("Não Localizado");
         } else {
             exibirPacientes(data);
         }
     } catch (error) {
         console.error("Erro ao listar pacientes:", error);
-        exibirMensagem(`Erro ao listar pacientes: ${error.message}`, "error");
+        exibirToast(`Erro ao listar pacientes: ${error.message}`);
     }
 }
 
@@ -294,16 +481,16 @@ function formatarData(data) {
     return `${dia}/${mes}/${ano}`;
 }
 
-function exibirMensagem(mensagem, tipo) {
-    const mensagemContainer = document.createElement("div");
-    mensagemContainer.className = `alert alert-${tipo === "success" ? "success" : tipo === "info" ? "info" : "danger"}`;
-    mensagemContainer.textContent = mensagem;
+function exibirToast(mensagem) {
+    const toastMensagem = document.getElementById("toastMensagem");
+    if (!toastMensagem) {
+        console.error("Elemento toastMensagem não encontrado no DOM.");
+        return;
+    }
+    toastMensagem.textContent = mensagem;
 
-    const resultContainer = document.getElementById("resultContainer");
-    resultContainer.innerHTML = "";
-    resultContainer.appendChild(mensagemContainer);
-
-    setTimeout(() => mensagemContainer.remove(), 5000);
+    const toastGeneric = new bootstrap.Toast(document.getElementById("toastGeneric"));
+    toastGeneric.show();
 }
 
 function formatarDataParaInput(data) {
@@ -312,7 +499,7 @@ function formatarDataParaInput(data) {
 }
 
 function editarPaciente(id) {
-    fetch(url+`/paciente/consultar/${id}`)
+    fetch(url + `/paciente/consultar/${id}`)
         .then(response => response.json())
         .then(paciente => {
             document.getElementById("editarNome").value = paciente.nome;
@@ -348,7 +535,7 @@ async function atualizarPaciente(id) {
     };
 
     try {
-        const response = await fetch(url+`/paciente/alterar/${id}`, {
+        const response = await fetch(url + `/paciente/alterar/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -364,9 +551,7 @@ async function atualizarPaciente(id) {
             throw new Error(data.message || `Erro na API: ${response.status} - ${response.statusText}`);
         }
 
-        const successMessage = data.message || "Paciente atualizado com sucesso!";
-        console.log("Resposta da API:", data);
-        exibirToast(successMessage);
+        exibirToast(data.message || "Paciente atualizado com sucesso!");
 
         const modalEditarPaciente = bootstrap.Modal.getInstance(document.getElementById("modalEditarPaciente"));
         if (modalEditarPaciente) {
@@ -375,15 +560,8 @@ async function atualizarPaciente(id) {
 
         listarPacientes();
     } catch (error) {
-        let errorMessage = "Erro ao atualizar paciente.";
-        if (error instanceof SyntaxError) {
-            errorMessage = "Erro ao processar a resposta da API.";
-        } else if (error.message) {
-            errorMessage = error.message;
-        }
-
-        console.error("Erro ao atualizar paciente:", errorMessage);
-        exibirToast(`Erro ao atualizar paciente: ${errorMessage}`);
+        console.error("Erro ao atualizar paciente:", error);
+        exibirToast(`Erro ao atualizar paciente: ${error.message}`);
     }
 }
 
@@ -402,9 +580,10 @@ function confirmarExclusao(id, nome) {
 
 async function excluirPaciente(id) {
     try {
-        const response = await fetch(url+`/paciente/excluir/${id}`, {
+        const response = await fetch(`${url}/paciente/excluir/${id}`, {
             method: "DELETE",
             headers: {
+                'Content-Type': 'application/json',
                 "Accept": "application/json"
             },
             mode: "cors"
@@ -413,12 +592,19 @@ async function excluirPaciente(id) {
         const data = await response.json();
 
         if (!response.ok) {
+            if (response.status === 409) {
+                const modalConfirmarExclusao = bootstrap.Modal.getInstance(document.getElementById("modalConfirmarExclusao"));
+                if (modalConfirmarExclusao) {
+                    modalConfirmarExclusao.hide();
+                }
+
+                confirmarExclusaoImunizacoes(id);
+                return;
+            }
             throw new Error(data.message || `Erro na API: ${response.status} - ${response.statusText}`);
         }
 
-        const successMessage = data.message || "Paciente excluído com sucesso!";
-        console.log("Resposta da API:", data);
-        exibirToast(successMessage);
+        exibirToast(data.message || "Paciente excluído com sucesso!");
 
         const modalConfirmarExclusao = bootstrap.Modal.getInstance(document.getElementById("modalConfirmarExclusao"));
         if (modalConfirmarExclusao) {
@@ -427,27 +613,59 @@ async function excluirPaciente(id) {
 
         listarPacientes();
     } catch (error) {
-        let errorMessage = "Erro ao excluir paciente.";
-        if (error instanceof SyntaxError) {
-            errorMessage = "Erro ao processar a resposta da API.";
-        } else if (error.message) {
-            errorMessage = error.message;
-        }
-
-        console.error("Erro ao excluir paciente:", errorMessage);
-        exibirToast(`Erro ao excluir paciente: ${errorMessage}`);
+        console.error("Erro ao excluir paciente:", error);
+        exibirToast(`Erro ao excluir paciente: ${error.message}`);
     }
 }
 
-function exibirToast(mensagem) {
-    const toastMensagem = document.getElementById("toastMensagem");
-    toastMensagem.textContent = mensagem;
+function confirmarExclusaoImunizacoes(id) {
+    const mensagemConfirmacaoImunizacoes = document.getElementById("mensagemConfirmacaoImunizacoes");
+    mensagemConfirmacaoImunizacoes.textContent = `O paciente possui imunizações cadastradas. Deseja excluir todas as imunizações do paciente para poder excluí-lo?`;
 
-    const toastGeneric = new bootstrap.Toast(document.getElementById("toastGeneric"));
-    toastGeneric.show();
+    const btnConfirmarExclusaoImunizacoes = document.getElementById("btnConfirmarExclusaoImunizacoes");
+    btnConfirmarExclusaoImunizacoes.onclick = async function() {
+        try {
+            const response = await fetch(`${url}/imunizacao/excluir/paciente/${id}`, {
+                method: "DELETE",
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Accept": "application/json"
+                },
+                mode: "cors"
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || `Erro na API: ${response.status} - ${response.statusText}`);
+            }
+
+            exibirToast(data.message || "Imunizações excluídas com sucesso!");
+
+            const modalConfirmarExclusaoImunizacoes = bootstrap.Modal.getInstance(document.getElementById("modalConfirmarExclusaoImunizacoes"));
+            if (modalConfirmarExclusaoImunizacoes) {
+                modalConfirmarExclusaoImunizacoes.hide();
+            }
+
+            excluirPaciente(id);
+        } catch (error) {
+            console.error("Erro ao excluir imunizações do paciente:", error);
+            exibirToast(`Erro ao excluir imunizações do paciente: ${error.message}`);
+        }
+    };
+
+    const modalConfirmarExclusaoImunizacoes = new bootstrap.Modal(document.getElementById("modalConfirmarExclusaoImunizacoes"));
+    modalConfirmarExclusaoImunizacoes.show();
 }
 
 function formatarDataParaEnvio(data) {
     const [ano, mes, dia] = data.split("-");
     return `${dia}-${mes}-${ano}`;
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    const btnAbrirModalCadastroImunizacao = document.getElementById("btnAbrirModalCadastroImunizacao");
+    if (btnAbrirModalCadastroImunizacao) {
+        btnAbrirModalCadastroImunizacao.addEventListener("click", abrirModalCadastroImunizacao);
+    }
+});

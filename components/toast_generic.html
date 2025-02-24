@@ -1,10 +1,43 @@
-<div class="toast-container position-fixed bottom-0 end-0 p-3">
-    <div id="toastGeneric" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-header">
-            <strong class="me-auto">Notificação</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+<div class="modal-dialog modal-fullscreen-lg-down">
+    <div class="modal-content container mt-5">
+        <div class="modal-header d-flex justify-content-between">
+            <h1 class="modal-title fs">Cadastrar Imunização</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
         </div>
-        <div class="toast-body" id="toastMensagem">
+        <div class="modal-body">
+            <form id="formCadastroImunizacao">
+                <div class="form-group mb-3">
+                    <label class="form-label" for="paciente">Paciente</label>
+                    <select class="form-select" id="paciente" required=""><option value="" disabled="" selected="">Escolha o paciente</option><option value="8">Lais Vieira 2</option><option value="10">Lais Vieira 3</option><option value="13">Jorge</option><option value="17">Lais Vieira 5</option><option value="23">Nilson 2</option><option value="24">Jorge Reis</option><option value="25">Jorge Luis</option><option value="36">Thiago Silva</option><option value="37">Joao Seboso</option><option value="38">João Silva Editado</option></select>
+                </div>
+                <div class="form-group mb-3">
+                    <label class="form-label" for="vacina">Vacina</label>
+                    <select class="form-select" id="vacina" required=""><option value="" disabled="" selected="">Escolha a vacina - dose</option><option value="88">BCG - Dose Única</option><option value="89">Hepatite B - Dose Única</option><option value="90">Poliomielite 1, 2 e 3 - 1ª Dose</option><option value="91">Poliomielite 1, 2 e 3 - 2ª Dose</option><option value="92">Poliomielite 1, 2 e 3 - 3ª Dose</option><option value="93">Rotavírus - 1ª Dose</option><option value="94">Rotavírus - 2ª Dose</option><option value="95">Pentavalente (DTP, HB, Hib) - 1ª Dose</option><option value="96">Pentavalente (DTP, HB, Hib) - 2ª Dose</option><option value="97">Pentavalente (DTP, HB, Hib) - 3ª Dose</option><option value="98">Pneumocócica 10 - 1ª Dose</option><option value="99">Pneumocócica 10 - 2ª Dose</option><option value="100">Pneumocócica 10 - Reforço</option><option value="101">Meningocócica C - 1ª Dose</option><option value="102">Meningocócica C - 2ª Dose</option><option value="103">Meningocócica C - Reforço</option><option value="104">COVID-19 - 1ª Dose</option><option value="105">COVID-19 - 2ª Dose</option><option value="106">Febre Amarela - 1ª Dose</option><option value="107">Febre Amarela - Reforço</option><option value="108">Tríplice Viral - 1ª Dose</option><option value="109">Tetraviral - 1ª Dose</option><option value="110">Hepatite A - Dose Única</option><option value="111">DTP  - 1ª Reforço</option><option value="112">DTP  - 2ª Reforço</option><option value="113">HPV4 - Dose Única</option><option value="114">Pneumocócica 23 - 1ª Dose</option><option value="115">Pneumocócica 23 - 2ª Dose</option><option value="116">Varicela - 2ª Dose</option></select>
+                </div>
+                <div class="form-group mb-3">
+                    <label class="form-label" for="dataAplicacao">Data de Aplicação</label>
+                    <input class="form-control" type="date" id="dataAplicacao" required="">
+                </div>
+                <div class="form-group mb-3">
+                    <label class="form-label" for="fabricante">Fabricante</label>
+                    <input class="form-control" type="text" id="fabricante">
+                </div>
+                <div class="form-group mb-3">
+                    <label class="form-label" for="lote">Lote</label>
+                    <input class="form-control" type="text" id="lote">
+                </div>
+                <div class="form-group mb-3">
+                    <label class="form-label" for="localAplicacao">Local da Aplicação</label>
+                    <input class="form-control" type="text" id="localAplicacao">
+                </div>
+                <div class="form-group mb-3">
+                    <label class="form-label" for="profissionalAplicador">Profissional Aplicador</label>
+                    <input class="form-control" type="text" id="profissionalAplicador">
+                </div>
+                <div class="d-grid col-6 mx-auto">
+                    <button id="btnCadastrarImunizacao" class="mb-3 btn btn-success" type="button">Cadastrar Imunização</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
