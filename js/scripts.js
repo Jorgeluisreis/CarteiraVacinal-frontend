@@ -195,8 +195,6 @@ function confirmarExclusaoImunizacao(id, vacina) {
 }
 
 
-
-
 async function excluirImunizacao(id) {
     try {
         const response = await fetch(`${url}/imunizacao/excluir/${id}`, {
