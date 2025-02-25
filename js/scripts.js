@@ -69,13 +69,6 @@ function abrirModalCadastroPaciente(event) {
         .catch(error => console.error("Erro ao carregar o modal de cadastro de paciente:", error));
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    const btnAbrirModal = document.getElementById("btnAbrirModalCadastro");
-    if (btnAbrirModal) {
-        btnAbrirModal.addEventListener("click", abrirModalCadastroPaciente);
-    }
-});
-
 function abrirModalCadastroImunizacao(event) {
     event.preventDefault();
 
@@ -99,6 +92,165 @@ function abrirModalCadastroImunizacao(event) {
         })
         .catch(error => console.error("Erro ao carregar o modal de cadastro de imunização:", error));
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    fetch("/components/header.html")
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById("headerContainer").innerHTML = html;
+        })
+        .catch(error => console.error("Erro ao carregar o header:", error));
+
+    fetch("/components/footer.html")
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById("footerContainer").innerHTML = html;
+        })
+        .catch(error => console.error("Erro ao carregar o footer:", error));
+
+    document.getElementById("btnPesquisar").addEventListener("click", function () {
+        const searchId = document.getElementById("searchId").value.trim();
+        const checkboxPaciente = document.getElementById("checkboxPaciente").checked;
+        const checkboxImunizacao = document.getElementById("checkboxImunizacao").checked;
+
+        if (checkboxPaciente && checkboxImunizacao) {
+            exibirToast("Selecione apenas uma opção de filtro.");
+            return;
+        }
+
+        if (searchId && checkboxPaciente) {
+            listarImunizacoesPorPaciente(searchId);
+        } else if (searchId && checkboxImunizacao) {
+            listarImunizacoesPorId(searchId);
+        } else if (!searchId && !checkboxPaciente && !checkboxImunizacao) {
+            listarImunizacoes();
+        } else {
+            exibirToast("Digite um ID e selecione uma opção de filtro.");
+        }
+    });
+});
+
+function exibirImunizacoesCarteira(imunizacoes) {
+    const container = document.getElementById("carteiraImunizacoesContainer");
+    container.innerHTML = "";
+
+    const table = document.createElement("table");
+    table.className = "table table-striped table-center";
+
+    const thead = document.createElement("thead");
+    thead.innerHTML = `
+        <tr>
+            <th>ID</th>
+            <th>Vacina</th>
+            <th>Dose</th>
+            <th>Data de Aplicação</th>
+            <th>Fabricante</th>
+            <th>Lote</th>
+            <th>Local de Aplicação</th>
+            <th>Profissional Aplicador</th>
+            <th>Ações</th>
+        </tr>
+    `;
+    table.appendChild(thead);
+
+    const tbody = document.createElement("tbody");
+    imunizacoes.forEach(imunizacao => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td>${imunizacao.id}</td>
+            <td>${imunizacao.vacina}</td>
+            <td>${imunizacao.dose}</td>
+            <td>${formatarData(imunizacao.dataAplicacao)}</td>
+            <td>${imunizacao.fabricante}</td>
+            <td>${imunizacao.lote}</td>
+            <td>${imunizacao.localAplicacao}</td>
+            <td>${imunizacao.profissionalAplicador}</td>
+            <td>
+                <button class="btn btn-danger btn-sm" onclick="confirmarExclusaoImunizacao(${imunizacao.id}, '${imunizacao.vacina}')">Excluir</button>
+            </td>
+        `;
+        tbody.appendChild(tr);
+    });
+    table.appendChild(tbody);
+
+    container.appendChild(table);
+}
+
+function confirmarExclusaoImunizacao(id, vacina) {
+    const mensagemConfirmacaoImunizacao = document.getElementById("mensagemConfirmacaoImunizacao");
+    mensagemConfirmacaoImunizacao.textContent = `Você tem certeza que deseja excluir a imunização ${vacina} com o ID ${id}?`;
+
+    const btnConfirmarExclusaoImunizacao = document.getElementById("btnConfirmarExclusaoImunizacao");
+    btnConfirmarExclusaoImunizacao.onclick = function() {
+        excluirImunizacao(id);
+    };
+
+    const modalCarteiraVacinal = bootstrap.Modal.getInstance(document.getElementById("modalCarteiraVacinal"));
+    if (modalCarteiraVacinal) {
+        modalCarteiraVacinal.hide();
+    }
+
+    const modalConfirmarExclusaoImunizacao = new bootstrap.Modal(document.getElementById("modalConfirmarExclusaoImunizacao"));
+    modalConfirmarExclusaoImunizacao.show();
+}
+
+
+
+
+async function excluirImunizacao(id) {
+    try {
+        const response = await fetch(`${url}/imunizacao/excluir/${id}`, {
+            method: "DELETE",
+            headers: {
+                'Content-Type': 'application/json',
+                "Accept": "application/json"
+            },
+            mode: "cors"
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || `Erro na API: ${response.status} - ${response.statusText}`);
+        }
+
+        exibirToast(data.message || "Imunização excluída com sucesso!");
+
+        const modalConfirmarExclusaoImunizacao = bootstrap.Modal.getInstance(document.getElementById("modalConfirmarExclusaoImunizacao"));
+        if (modalConfirmarExclusaoImunizacao) {
+            modalConfirmarExclusaoImunizacao.hide();
+        }
+
+        const pacienteId = document.getElementById("carteiraId").value;
+        abrirModalCarteiraVacinal(pacienteId);
+    } catch (error) {
+        console.error("Erro ao excluir imunização:", error);
+        exibirToast(`Erro ao excluir imunização: ${error.message}`);
+    }
+}
+
+
+function abrirModalCarteiraVacinal(id) {
+    fetch(url + `/paciente/consultar/${id}`)
+        .then(response => response.json())
+        .then(paciente => {
+            document.getElementById("carteiraId").value = paciente.id;
+            document.getElementById("carteiraNome").value = paciente.nome;
+            document.getElementById("carteiraSexo").value = paciente.sexo;
+            document.getElementById("carteiraCpf").value = paciente.cpf;
+            document.getElementById("carteiraDataNascimento").value = formatarData(paciente.dataNascimento);
+
+            listarImunizacoesPorPaciente(paciente.id);
+        })
+        .catch(error => {
+            console.error("Erro ao carregar os dados do paciente:", error);
+            exibirToast(`Erro ao carregar os dados do paciente: ${error.message}`);
+        });
+
+    const modalCarteiraVacinal = new bootstrap.Modal(document.getElementById("modalCarteiraVacinal"));
+    modalCarteiraVacinal.show();
+}
+
 
 function carregarPacientes() {
     fetch(url + "/paciente/consultar")
@@ -307,12 +459,13 @@ async function listarImunizacoesPorPaciente(id) {
             mode: "cors"
         });
 
+        const data = await response.json();
+
         if (!response.ok) {
-            throw new Error(`Erro na API: ${response.status} - ${response.statusText}`);
+            throw new Error(data.message || `Erro na API: ${response.status} - ${response.statusText}`);
         }
 
-        const data = await response.json();
-        exibirImunizacoes(data);
+        exibirImunizacoesCarteira(data);
     } catch (error) {
         console.error("Erro ao listar imunizações por paciente:", error);
         exibirToast(`Erro ao listar imunizações por paciente: ${error.message}`);
@@ -397,7 +550,10 @@ async function cadastrarPaciente() {
             modalCadastroPaciente.hide();
         }
 
-        listarPacientes();
+        const resultContainer = document.getElementById("resultContainer");
+        if (resultContainer) {
+            listarPacientes();
+        }
     } catch (error) {
         console.error("Erro ao cadastrar paciente:", error);
         exibirToast(`Erro ao cadastrar paciente: ${error.message}`);
@@ -508,6 +664,7 @@ function exibirPacientes(pacientes) {
             <td>
                 <button class="btn btn-warning btn-sm" onclick="editarPaciente(${paciente.id})">Editar</button>
                 <button class="btn btn-danger btn-sm" onclick="confirmarExclusao(${paciente.id}, '${paciente.nome}')">Excluir</button>
+                <button class="btn btn-info btn-sm" onclick="abrirModalCarteiraVacinal(${paciente.id})">Carteira Vacinal</button>
             </td>
         `;
         tbody.appendChild(tr);
@@ -703,10 +860,3 @@ function formatarDataParaEnvio(data) {
     const [ano, mes, dia] = data.split("-");
     return `${dia}-${mes}-${ano}`;
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-    const btnAbrirModalCadastroImunizacao = document.getElementById("btnAbrirModalCadastroImunizacao");
-    if (btnAbrirModalCadastroImunizacao) {
-        btnAbrirModalCadastroImunizacao.addEventListener("click", abrirModalCadastroImunizacao);
-    }
-});

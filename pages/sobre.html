@@ -9,20 +9,16 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
         rel="stylesheet">
     <title>Sobre</title>
 </head>
 
 <body>
-
-    
     <div id="headerContainer"></div>
-    
     <main class="cabecalho">
         <section>
             <h1 class="titulo">SOBRE</h1>
-
             <div class="texto_decoracao">
                 <p>
                     O projeto tem como objetivo desenvolver a criação de um sistema para gerenciamento das vacinas
@@ -50,7 +46,6 @@
                 </div>
             </div>
             <section class="equipes">
-
                 <div class="desenvolvedores">
                     <h4>Líder Técnico</h4>
                     <p>Jorge Luís</p>
@@ -62,7 +57,6 @@
                                 src="/img/github.svg"></a>
                     </div>
                 </div>
-
                 <div class="desenvolvedores">
                     <h4>Desenvolvedor</h4>
                     <p>David Diniz</p>
@@ -74,7 +68,6 @@
                                 src="/img/github.svg"></a>
                     </div>
                 </div>
-
                 <div class="desenvolvedores">
                     <h4>Desenvolvedor</h4>
                     <p>Aline Maria</p>
@@ -86,7 +79,6 @@
                                 src="/img/github.svg"></a>
                     </div>
                 </div>
-
                 <div class="desenvolvedores">
                     <h4>Desenvolvedor</h4>
                     <p>Laís Vieira</p>
@@ -98,7 +90,6 @@
                                 src="/img/github.svg"></a>
                     </div>
                 </div>
-
                 <div class="desenvolvedores">
                     <h4>Desenvolvedor</h4>
                     <p>Cecília Rodrigues</p>
@@ -111,7 +102,6 @@
                                 src="/img/github.svg"></a>
                     </div>
                 </div>
-
                 <div class="desenvolvedores">
                     <h4>Desenvolvedor</h4>
                     <p>Nilson Eduardo</p>
@@ -126,14 +116,20 @@
             </section>
         </section>
     </main>
-
     <div id="footerContainer"></div>
+    <div id="modalContainer"></div>
 
     <script>
         fetch("/components/header.html")
             .then(response => response.text())
             .then(html => {
                 document.getElementById("headerContainer").innerHTML = html;
+                const script = document.createElement("script");
+                script.src = "/js/scripts.js";
+                script.onload = function () {
+                    console.log("Script carregado com sucesso.");
+                };
+                document.body.appendChild(script);
             })
             .catch(error => console.error("Erro ao carregar o header:", error));
 
@@ -144,6 +140,7 @@
             })
             .catch(error => console.error("Erro ao carregar o footer:", error));
     </script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

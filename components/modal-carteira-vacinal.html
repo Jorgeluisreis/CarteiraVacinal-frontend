@@ -1,0 +1,35 @@
+<div class="modal fade" id="modalCarteiraVacinal" tabindex="-1" aria-labelledby="modalCarteiraVacinalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalCarteiraVacinalLabel">Carteira Vacinal</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="carteiraId">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Nome</label>
+                        <input type="text" class="form-control" id="carteiraNome" readonly>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Sexo</label>
+                        <input type="text" class="form-control" id="carteiraSexo" readonly>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">CPF</label>
+                        <input type="text" class="form-control" id="carteiraCpf" readonly>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Data de Nascimento</label>
+                        <input type="text" class="form-control" id="carteiraDataNascimento" readonly>
+                    </div>
+                </div>
+                <h5>Imunizações</h5>
+                <div id="carteiraImunizacoesContainer"></div>
+            </div>
+        </div>
+    </div>
+</div>
