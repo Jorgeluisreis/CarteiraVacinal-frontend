@@ -134,6 +134,13 @@ function exibirImunizacoesCarteira(imunizacoes) {
     const container = document.getElementById("carteiraImunizacoesContainer");
     container.innerHTML = "";
 
+    if (imunizacoes.length === 0) {
+        const mensagem = document.createElement("p");
+        mensagem.textContent = "Sem imunizações cadastradas para este paciente.";
+        container.appendChild(mensagem);
+        return;
+    }
+
     const table = document.createElement("table");
     table.className = "table table-striped table-center";
 
@@ -176,24 +183,6 @@ function exibirImunizacoesCarteira(imunizacoes) {
     container.appendChild(table);
 }
 
-function confirmarExclusaoImunizacao(id, vacina) {
-    const mensagemConfirmacaoImunizacao = document.getElementById("mensagemConfirmacaoImunizacao");
-    mensagemConfirmacaoImunizacao.textContent = `Você tem certeza que deseja excluir a imunização ${vacina} com o ID ${id}?`;
-
-    const btnConfirmarExclusaoImunizacao = document.getElementById("btnConfirmarExclusaoImunizacao");
-    btnConfirmarExclusaoImunizacao.onclick = function() {
-        excluirImunizacao(id);
-    };
-
-    const modalCarteiraVacinal = bootstrap.Modal.getInstance(document.getElementById("modalCarteiraVacinal"));
-    if (modalCarteiraVacinal) {
-        modalCarteiraVacinal.hide();
-    }
-
-    const modalConfirmarExclusaoImunizacao = new bootstrap.Modal(document.getElementById("modalConfirmarExclusaoImunizacao"));
-    modalConfirmarExclusaoImunizacao.show();
-}
-
 
 async function excluirImunizacao(id) {
     try {
@@ -229,6 +218,11 @@ async function excluirImunizacao(id) {
 
 
 function abrirModalCarteiraVacinal(id) {
+    const loading = document.getElementById("loading");
+    const carteiraContent = document.getElementById("carteiraContent");
+    loading.style.display = "block";
+    carteiraContent.style.display = "none";
+
     fetch(url + `/paciente/consultar/${id}`)
         .then(response => response.json())
         .then(paciente => {
@@ -238,17 +232,20 @@ function abrirModalCarteiraVacinal(id) {
             document.getElementById("carteiraCpf").value = paciente.cpf;
             document.getElementById("carteiraDataNascimento").value = formatarData(paciente.dataNascimento);
 
-            listarImunizacoesPorPaciente(paciente.id);
+            return listarImunizacoesPorPaciente(paciente.id);
+        })
+        .then(() => {
+            loading.style.display = "none";
+            carteiraContent.style.display = "block";
+
+            const modalCarteiraVacinal = new bootstrap.Modal(document.getElementById("modalCarteiraVacinal"));
+            modalCarteiraVacinal.show();
         })
         .catch(error => {
             console.error("Erro ao carregar os dados do paciente:", error);
             exibirToast(`Erro ao carregar os dados do paciente: ${error.message}`);
         });
-
-    const modalCarteiraVacinal = new bootstrap.Modal(document.getElementById("modalCarteiraVacinal"));
-    modalCarteiraVacinal.show();
 }
-
 
 function carregarPacientes() {
     fetch(url + "/paciente/consultar")
@@ -414,7 +411,9 @@ async function listarImunizacoes() {
         });
 
         if (!response.ok) {
-            throw new Error(`Erro na API: ${response.status} - ${response.statusText}`);
+            const data = await response.json();
+            exibirToast(data.message || `Erro na API: ${response.status} - ${response.statusText}`);
+            return;
         }
 
         const data = await response.json();
@@ -435,11 +434,13 @@ async function listarImunizacoesPorId(id) {
             mode: "cors"
         });
 
+        const data = await response.json();
+
         if (!response.ok) {
-            throw new Error(`Erro na API: ${response.status} - ${response.statusText}`);
+            exibirToast(data.message || `Erro na API: ${response.status} - ${response.statusText}`);
+            return;
         }
 
-        const data = await response.json();
         exibirImunizacoes(data);
     } catch (error) {
         console.error("Erro ao listar imunizações por ID:", error);
@@ -460,10 +461,11 @@ async function listarImunizacoesPorPaciente(id) {
         const data = await response.json();
 
         if (!response.ok) {
-            throw new Error(data.message || `Erro na API: ${response.status} - ${response.statusText}`);
+            exibirToast(data.message || `Erro na API: ${response.status} - ${response.statusText}`);
+            return;
         }
 
-        exibirImunizacoesCarteira(data);
+        exibirImunizacoes(data);
     } catch (error) {
         console.error("Erro ao listar imunizações por paciente:", error);
         exibirToast(`Erro ao listar imunizações por paciente: ${error.message}`);
@@ -477,6 +479,14 @@ function exibirImunizacoes(imunizacoes) {
         return;
     }
     resultContainer.innerHTML = "";
+
+    if (imunizacoes.length === 0) {
+        const mensagem = document.createElement("p");
+        mensagem.textContent = "Não há imunizações cadastradas.";
+        mensagem.className = "text-center";
+        resultContainer.appendChild(mensagem);
+        return;
+    }
 
     const table = document.createElement("table");
     table.className = "table table-striped table-center";

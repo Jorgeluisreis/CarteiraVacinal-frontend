@@ -263,3 +263,10 @@ body {
     text-align: center;
     vertical-align: middle;
 }
+
+#loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+}
