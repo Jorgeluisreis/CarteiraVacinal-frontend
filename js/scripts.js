@@ -100,12 +100,6 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(response => response.text())
         .then(html => {
             document.getElementById("headerContainer").innerHTML = html;
-            const script = document.createElement("script");
-            script.src = "/js/scripts.js";
-            script.onload = function () {
-                console.log("Script carregado com sucesso.");
-            };
-            document.body.appendChild(script);
         })
         .catch(error => console.error("Erro ao carregar o header:", error));
 
@@ -116,26 +110,28 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .catch(error => console.error("Erro ao carregar o footer:", error));
 
-    document.getElementById("btnPesquisar").addEventListener("click", function () {
-        const searchId = document.getElementById("searchId").value.trim();
-        const checkboxPaciente = document.getElementById("checkboxPaciente").checked;
-        const checkboxImunizacao = document.getElementById("checkboxImunizacao").checked;
+    if (document.getElementById("btnPesquisarImunizacao")) {
+        document.getElementById("btnPesquisarImunizacao").addEventListener("click", function () {
+            const searchId = document.getElementById("searchId").value.trim();
+            const checkboxPaciente = document.getElementById("checkboxPaciente").checked;
+            const checkboxImunizacao = document.getElementById("checkboxImunizacao").checked;
 
-        if (checkboxPaciente && checkboxImunizacao) {
-            exibirToast("Selecione apenas uma opção de filtro.");
-            return;
-        }
+            if (checkboxPaciente && checkboxImunizacao) {
+                exibirToast("Selecione apenas uma opção de filtro.");
+                return;
+            }
 
-        if (searchId && checkboxPaciente) {
-            listarImunizacoesPorPaciente(searchId);
-        } else if (searchId && checkboxImunizacao) {
-            listarImunizacoesPorId(searchId);
-        } else if (!searchId && !checkboxPaciente && !checkboxImunizacao) {
-            listarImunizacoes();
-        } else {
-            exibirToast("Digite um ID e selecione uma opção de filtro.");
-        }
-    });
+            if (searchId && checkboxPaciente) {
+                listarImunizacoesPorPaciente(searchId);
+            } else if (searchId && checkboxImunizacao) {
+                listarImunizacoesPorId(searchId);
+            } else if (!searchId && !checkboxPaciente && !checkboxImunizacao) {
+                listarImunizacoes();
+            } else {
+                exibirToast("Digite um ID e selecione uma opção de filtro.");
+            }
+        });
+    }
 });
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -164,7 +160,7 @@ function exibirImunizacoesCarteira(imunizacoes) {
     const container = document.getElementById("carteiraImunizacoesContainer");
     container.innerHTML = "";
 
-    if (imunizacoes.length === 0) {
+    if (!imunizacoes || imunizacoes.length === 0) {
         const mensagem = document.createElement("p");
         mensagem.textContent = "Sem imunizações cadastradas para este paciente.";
         container.appendChild(mensagem);
@@ -212,7 +208,6 @@ function exibirImunizacoesCarteira(imunizacoes) {
 
     container.appendChild(table);
 }
-
 
 async function excluirImunizacao(id) {
     try {
@@ -268,7 +263,7 @@ function abrirModalCarteiraVacinal(id) {
             ]);
         })
         .then(([imunizacoes, estatisticas]) => {
-            exibirImunizacoesCarteira(imunizacoes);
+            exibirImunizacoesModal(imunizacoes);
             exibirEstatisticas(estatisticas);
             loading.style.display = "none";
             carteiraContent.style.display = "block";
@@ -280,6 +275,60 @@ function abrirModalCarteiraVacinal(id) {
             console.error("Erro ao carregar os dados do paciente:", error);
             exibirToast(`Erro ao carregar os dados do paciente: ${error.message}`);
         });
+}
+
+
+function exibirImunizacoesModal(imunizacoes) {
+    const container = document.getElementById("carteiraImunizacoesContainer");
+    container.innerHTML = "";
+
+    if (!imunizacoes || imunizacoes.length === 0) {
+        const mensagem = document.createElement("p");
+        mensagem.textContent = "Sem imunizações cadastradas para este paciente.";
+        container.appendChild(mensagem);
+        return;
+    }
+
+    const table = document.createElement("table");
+    table.className = "table table-striped table-center";
+
+    const thead = document.createElement("thead");
+    thead.innerHTML = `
+        <tr>
+            <th>ID</th>
+            <th>Vacina</th>
+            <th>Dose</th>
+            <th>Data de Aplicação</th>
+            <th>Fabricante</th>
+            <th>Lote</th>
+            <th>Local de Aplicação</th>
+            <th>Profissional Aplicador</th>
+            <th>Ações</th>
+        </tr>
+    `;
+    table.appendChild(thead);
+
+    const tbody = document.createElement("tbody");
+    imunizacoes.forEach(imunizacao => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td>${imunizacao.id}</td>
+            <td>${imunizacao.vacina}</td>
+            <td>${imunizacao.dose}</td>
+            <td>${formatarData(imunizacao.dataAplicacao)}</td>
+            <td>${imunizacao.fabricante}</td>
+            <td>${imunizacao.lote}</td>
+            <td>${imunizacao.localAplicacao}</td>
+            <td>${imunizacao.profissionalAplicador}</td>
+            <td>
+                <button class="btn btn-danger btn-sm" onclick="confirmarExclusaoImunizacao(${imunizacao.id}, '${imunizacao.vacina}')">Excluir</button>
+            </td>
+        `;
+        tbody.appendChild(tr);
+    });
+    table.appendChild(tbody);
+
+    container.appendChild(table);
 }
 
 function carregarPacientes() {
@@ -469,17 +518,42 @@ async function listarImunizacoesPorId(id) {
             mode: "cors"
         });
 
-        const data = await response.json();
+        const data = await response.text();
 
         if (!response.ok) {
-            exibirToast(data.message || `Erro na API: ${response.status} - ${response.statusText}`);
+            const mensagemErro = data || `Erro na API: ${response.status} - ${response.statusText}`;
+            exibirToast(mensagemErro);
             return;
         }
 
-        exibirImunizacoes(data);
+        exibirImunizacoes(JSON.parse(data));
     } catch (error) {
         console.error("Erro ao listar imunizações por ID:", error);
         exibirToast(`Erro ao listar imunizações por ID: ${error.message}`);
+    }
+}
+async function listarImunizacoesPorPaciente(id) {
+    try {
+        const response = await fetch(url + `/imunizacao/consultar/paciente/${id}`, {
+            method: "GET",
+            headers: {
+                "Accept": "application/json"
+            },
+            mode: "cors"
+        });
+
+        const data = await response.text();
+
+        if (!response.ok) {
+            const mensagemErro = data || `Erro na API: ${response.status} - ${response.statusText}`;
+            exibirToast(mensagemErro);
+            return [];
+        }
+
+        exibirImunizacoes(JSON.parse(data));
+    } catch (error) {
+        console.error("Erro ao listar imunizações por paciente:", error);
+        exibirToast(`Erro ao listar imunizações por paciente: ${error.message}`);
     }
 }
 
@@ -493,20 +567,22 @@ async function listarImunizacoesPorPaciente(id) {
             mode: "cors"
         });
 
-        const data = await response.json();
+        const data = await response.text();
 
         if (!response.ok) {
-            exibirToast(data.message || `Erro na API: ${response.status} - ${response.statusText}`);
+            const mensagemErro = data || `Erro na API: ${response.status} - ${response.statusText}`;
+            exibirToast(mensagemErro);
             return [];
         }
 
-        return data;
+        return JSON.parse(data);
     } catch (error) {
         console.error("Erro ao listar imunizações por paciente:", error);
         exibirToast(`Erro ao listar imunizações por paciente: ${error.message}`);
         return [];
     }
 }
+
 
 function exibirImunizacoes(imunizacoes) {
     const resultContainer = document.getElementById("resultContainer");

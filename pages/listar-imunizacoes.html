@@ -29,7 +29,7 @@
                 <input class="form-check-input" type="checkbox" id="checkboxImunizacao">
                 <label class="form-check-label" for="checkboxImunizacao">Por Imunização</label>
             </div>
-            <button id="btnPesquisar" class="btn btn-primary">Pesquisar</button>
+            <button id="btnPesquisarImunizacao" class="btn btn-primary">Pesquisar</button>
         </div>
         <div id="resultContainer"></div>
     </div>
@@ -49,27 +49,24 @@
     </div>
 
     <script>
-        fetch("/components/header.html")
-            .then(response => response.text())
-            .then(html => {
-                document.getElementById("headerContainer").innerHTML = html;
-                const script = document.createElement("script");
-                script.src = "/js/scripts.js";
-                script.onload = function () {
-                    console.log("Script carregado com sucesso.");
-                };
-                document.body.appendChild(script);
-            })
-            .catch(error => console.error("Erro ao carregar o header:", error));
+        document.addEventListener("DOMContentLoaded", function () {
+            fetch("/components/header.html")
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById("headerContainer").innerHTML = html;
+                })
+                .catch(error => console.error("Erro ao carregar o header:", error));
 
-        fetch("/components/footer.html")
-            .then(response => response.text())
-            .then(html => {
-                document.getElementById("footerContainer").innerHTML = html;
-            })
-            .catch(error => console.error("Erro ao carregar o footer:", error));
+            fetch("/components/footer.html")
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById("footerContainer").innerHTML = html;
+                })
+                .catch(error => console.error("Erro ao carregar o footer:", error));
+        });
     </script>
 
+    <script src="../js/scripts.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
