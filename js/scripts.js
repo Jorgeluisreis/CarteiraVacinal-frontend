@@ -1,5 +1,6 @@
 let timeoutId;
 let activeDropdown = null;
+let zIndexCounter = 1050;
 
 let url = "https://apicarteiravacinal.jorgedev.net";
 
@@ -209,6 +210,54 @@ function exibirImunizacoesCarteira(imunizacoes) {
     container.appendChild(table);
 }
 
+function confirmarExclusaoImunizacao(id, vacina) {
+    const mensagemConfirmacaoImunizacao = document.getElementById("mensagemConfirmacaoImunizacao");
+    mensagemConfirmacaoImunizacao.textContent = `Você tem certeza que deseja excluir a imunização ${vacina} com o ID ${id}?`;
+
+    const btnConfirmarExclusaoImunizacao = document.getElementById("btnConfirmarExclusaoImunizacao");
+    btnConfirmarExclusaoImunizacao.onclick = async function() {
+        try {
+            const response = await fetch(`${url}/imunizacao/excluir/${id}`, {
+                method: "DELETE",
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Accept": "application/json"
+                },
+                mode: "cors"
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || `Erro na API: ${response.status} - ${response.statusText}`);
+            }
+
+            exibirToast(data.message || "Imunização excluída com sucesso!");
+
+            const modalConfirmarExclusaoImunizacao = bootstrap.Modal.getInstance(document.getElementById("modalConfirmarExclusaoImunizacao"));
+            if (modalConfirmarExclusaoImunizacao) {
+                modalConfirmarExclusaoImunizacao.hide();
+            }
+
+            const modalCarteiraVacinal = bootstrap.Modal.getInstance(document.getElementById("modalCarteiraVacinal"));
+            if (modalCarteiraVacinal) {
+                modalCarteiraVacinal.hide();
+            }
+
+            setTimeout(() => {
+                abrirModalCarteiraVacinal(document.getElementById("carteiraId").value);
+            }, 100); 
+
+        } catch (error) {
+            console.error("Erro ao excluir imunização:", error);
+            exibirToast(`Erro ao excluir imunização: ${error.message}`);
+        }
+    };
+
+    const modalConfirmarExclusaoImunizacao = new bootstrap.Modal(document.getElementById("modalConfirmarExclusaoImunizacao"));
+    modalConfirmarExclusaoImunizacao.show();
+}
+
 async function excluirImunizacao(id) {
     try {
         const response = await fetch(`${url}/imunizacao/excluir/${id}`, {
@@ -240,7 +289,6 @@ async function excluirImunizacao(id) {
         exibirToast(`Erro ao excluir imunização: ${error.message}`);
     }
 }
-
 
 function abrirModalCarteiraVacinal(id) {
     const loading = document.getElementById("loading");
@@ -276,7 +324,6 @@ function abrirModalCarteiraVacinal(id) {
             exibirToast(`Erro ao carregar os dados do paciente: ${error.message}`);
         });
 }
-
 
 function exibirImunizacoesModal(imunizacoes) {
     const container = document.getElementById("carteiraImunizacoesContainer");
@@ -394,7 +441,6 @@ async function cadastrarImunizacao() {
             modalCadastroImunizacao.hide();
         }
 
-        listarImunizacoes();
     } catch (error) {
         console.error("Erro ao cadastrar imunização:", error);
         exibirToast(`Erro ao cadastrar imunização: ${error.message}`);

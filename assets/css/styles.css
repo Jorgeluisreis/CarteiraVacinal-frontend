@@ -270,3 +270,16 @@ body {
     align-items: center;
     height: 100px;
 }
+
+#modalCarteiraVacinal {
+    z-index: 1050;
+}
+#modalConfirmarExclusaoImunizacao {
+    z-index: 1060;
+}
+.modal-backdrop.show {
+    z-index: 1049;
+}
+#modalConfirmarExclusaoImunizacao + .modal-backdrop.show {
+    z-index: 1059;
+}
