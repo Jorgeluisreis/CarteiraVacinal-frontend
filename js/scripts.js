@@ -229,13 +229,17 @@ function abrirModalCarteiraVacinal(id) {
             document.getElementById("carteiraId").value = paciente.id;
             document.getElementById("carteiraNome").value = paciente.nome;
             document.getElementById("carteiraSexo").value = paciente.sexo;
-            document.getElementById("carteiraCpf").value = paciente.cpf;
+            document.getElementById("carteiraCpf").value = mascararCPF(paciente.cpf);
             document.getElementById("carteiraDataNascimento").value = formatarData(paciente.dataNascimento);
 
-            return listarImunizacoesPorPaciente(paciente.id);
+            return Promise.all([
+                listarImunizacoesPorPaciente(paciente.id),
+                obterEstatisticasPaciente(paciente.id)
+            ]);
         })
-        .then(imunizacoes => {
+        .then(([imunizacoes, estatisticas]) => {
             exibirImunizacoesCarteira(imunizacoes);
+            exibirEstatisticas(estatisticas);
             loading.style.display = "none";
             carteiraContent.style.display = "block";
 
@@ -664,11 +668,12 @@ function exibirPacientes(pacientes) {
     const tbody = document.createElement("tbody");
     pacientes.forEach(paciente => {
         const dataNascimentoFormatada = formatarData(paciente.dataNascimento);
+        const cpfMascarado = mascararCPF(paciente.cpf);
         const tr = document.createElement("tr");
         tr.innerHTML = `
             <td>${paciente.id}</td>
             <td>${paciente.nome}</td>
-            <td>${paciente.cpf}</td>
+            <td>${cpfMascarado}</td>
             <td>${paciente.sexo}</td>
             <td>${dataNascimentoFormatada}</td>
             <td>
@@ -866,7 +871,59 @@ function confirmarExclusaoImunizacoes(id) {
     modalConfirmarExclusaoImunizacoes.show();
 }
 
+async function obterEstatisticasPaciente(id) {
+    const estatisticas = {};
+
+    try {
+        const responseAplicadas = await fetch(`${url}/estatisticas/imunizacoes/paciente/${id}`);
+        const dataAplicadas = await responseAplicadas.json();
+        estatisticas.quantidadeAplicadas = dataAplicadas.quantidade || 0;
+
+        const responseProximas = await fetch(`${url}/estatisticas/proximas_imunizacoes/paciente/${id}`);
+        const dataProximas = await responseProximas.json();
+        estatisticas.quantidadeProximas = dataProximas.quantidade || 0;
+
+        const responseAtrasadas = await fetch(`${url}/estatisticas/imunizacoes_atrasadas/paciente/${id}`);
+        const dataAtrasadas = await responseAtrasadas.json();
+        estatisticas.quantidadeAtrasadas = dataAtrasadas.quantidade || 0;
+
+        const idadeEmMeses = calcularIdadeEmMeses(document.getElementById("carteiraDataNascimento").value);
+        const responseRecomendadas = await fetch(`${url}/estatisticas/imunizacoes/idade_maior/${idadeEmMeses}`);
+        const dataRecomendadas = await responseRecomendadas.json();
+        estatisticas.quantidadeRecomendadas = dataRecomendadas.quantidade || 0;
+
+        const responseNaoAplicaveis = await fetch(`${url}/estatisticas/vacinas/nao_aplicaveis/paciente/${id}`);
+        const dataNaoAplicaveis = await responseNaoAplicaveis.json();
+        estatisticas.quantidadeNaoAplicaveis = dataNaoAplicaveis.quantidade || 0;
+
+    } catch (error) {
+        console.error("Erro ao obter estatísticas do paciente:", error);
+    }
+
+    return estatisticas;
+}
+
+function calcularIdadeEmMeses(dataNascimento) {
+    const [dia, mes, ano] = dataNascimento.split("/");
+    const dataNasc = new Date(`${ano}-${mes}-${dia}`);
+    const dataAtual = new Date();
+    const idadeEmMeses = (dataAtual.getFullYear() - dataNasc.getFullYear()) * 12 + (dataAtual.getMonth() - dataNasc.getMonth());
+    return idadeEmMeses;
+}
+
+function exibirEstatisticas(estatisticas) {
+    document.getElementById("quantidadeAplicadas").textContent = estatisticas.quantidadeAplicadas;
+    document.getElementById("quantidadeProximas").textContent = estatisticas.quantidadeProximas;
+    document.getElementById("quantidadeAtrasadas").textContent = estatisticas.quantidadeAtrasadas;
+    document.getElementById("quantidadeRecomendadas").textContent = estatisticas.quantidadeRecomendadas;
+    document.getElementById("quantidadeNaoAplicaveis").textContent = estatisticas.quantidadeNaoAplicaveis;
+}
+
 function formatarDataParaEnvio(data) {
     const [ano, mes, dia] = data.split("-");
     return `${dia}-${mes}-${ano}`;
+}
+
+function mascararCPF(cpf) {
+    return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
 }
