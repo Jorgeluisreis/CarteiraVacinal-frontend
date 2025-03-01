@@ -100,6 +100,12 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(response => response.text())
         .then(html => {
             document.getElementById("headerContainer").innerHTML = html;
+            const script = document.createElement("script");
+            script.src = "/js/scripts.js";
+            script.onload = function () {
+                console.log("Script carregado com sucesso.");
+            };
+            document.body.appendChild(script);
         })
         .catch(error => console.error("Erro ao carregar o header:", error));
 
@@ -130,6 +136,28 @@ document.addEventListener("DOMContentLoaded", function () {
             exibirToast("Digite um ID e selecione uma opção de filtro.");
         }
     });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    fetch("/components/header.html")
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById("headerContainer").innerHTML = html;
+            const script = document.createElement("script");
+            script.src = "/js/scripts.js";
+            script.onload = function () {
+                console.log("Script carregado com sucesso.");
+            };
+            document.body.appendChild(script);
+        })
+        .catch(error => console.error("Erro ao carregar o header:", error));
+
+    fetch("/components/footer.html")
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById("footerContainer").innerHTML = html;
+        })
+        .catch(error => console.error("Erro ao carregar o footer:", error));
 });
 
 function exibirImunizacoesCarteira(imunizacoes) {
