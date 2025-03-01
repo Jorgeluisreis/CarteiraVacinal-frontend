@@ -716,10 +716,6 @@ async function cadastrarPaciente() {
             modalCadastroPaciente.hide();
         }
 
-        const resultContainer = document.getElementById("resultContainer");
-        if (resultContainer) {
-            listarPacientes();
-        }
     } catch (error) {
         console.error("Erro ao cadastrar paciente:", error);
         exibirToast(`Erro ao cadastrar paciente: ${error.message}`);
