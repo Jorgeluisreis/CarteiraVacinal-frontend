@@ -234,7 +234,8 @@ function abrirModalCarteiraVacinal(id) {
 
             return listarImunizacoesPorPaciente(paciente.id);
         })
-        .then(() => {
+        .then(imunizacoes => {
+            exibirImunizacoesCarteira(imunizacoes);
             loading.style.display = "none";
             carteiraContent.style.display = "block";
 
@@ -462,13 +463,14 @@ async function listarImunizacoesPorPaciente(id) {
 
         if (!response.ok) {
             exibirToast(data.message || `Erro na API: ${response.status} - ${response.statusText}`);
-            return;
+            return [];
         }
 
-        exibirImunizacoes(data);
+        return data;
     } catch (error) {
         console.error("Erro ao listar imunizações por paciente:", error);
         exibirToast(`Erro ao listar imunizações por paciente: ${error.message}`);
+        return [];
     }
 }
 
