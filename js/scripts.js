@@ -65,6 +65,8 @@ function abrirModalCadastroPaciente(event) {
                 event.preventDefault();
                 cadastrarPaciente();
             });
+
+            document.getElementById("cpf").addEventListener("input", mascararCPFInput);
         })
         .catch(error => console.error("Erro ao carregar o modal de cadastro de paciente:", error));
 }
@@ -712,11 +714,30 @@ function formatarDataParaInput(data) {
 }
 
 function editarPaciente(id) {
+    if (!document.getElementById("modalEditarPaciente")) {
+        fetch("/components/modal_editar_paciente.html")
+            .then(response => response.text())
+            .then(html => {
+                document.body.insertAdjacentHTML('beforeend', html);
+                carregarDadosPaciente(id);
+                document.getElementById("editarCpf").addEventListener("input", mascararCPFInput);
+            })
+            .catch(error => {
+                console.error("Erro ao carregar o modal de edição de paciente:", error);
+                exibirToast(`Erro ao carregar o modal de edição de paciente: ${error.message}`);
+            });
+    } else {
+        carregarDadosPaciente(id);
+        document.getElementById("editarCpf").addEventListener("input", mascararCPFInput);
+    }
+}
+
+function carregarDadosPaciente(id) {
     fetch(url + `/paciente/consultar/${id}`)
         .then(response => response.json())
         .then(paciente => {
             document.getElementById("editarNome").value = paciente.nome;
-            document.getElementById("editarCpf").value = paciente.cpf;
+            document.getElementById("editarCpf").value = mascararCPF(paciente.cpf);
             document.getElementById("editarSexo").value = paciente.sexo;
             document.getElementById("editarData").value = formatarDataParaInput(paciente.dataNascimento);
 
@@ -736,7 +757,7 @@ function editarPaciente(id) {
 
 async function atualizarPaciente(id) {
     const nome = document.getElementById("editarNome").value.trim();
-    const cpf = document.getElementById("editarCpf").value.trim();
+    const cpf = document.getElementById("editarCpf").value.trim().replace(/\D/g, ''); // Remove a pontuação do CPF
     const sexo = document.getElementById("editarSexo").value;
     const dataNascimento = document.getElementById("editarData").value;
 
@@ -927,3 +948,12 @@ function formatarDataParaEnvio(data) {
 function mascararCPF(cpf) {
     return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
 }
+
+function mascararCPFInput(event) {
+    let input = event.target;
+    input.value = input.value.replace(/\D/g, '');
+    input.value = input.value.replace(/(\d{3})(\d)/, '$1.$2');
+    input.value = input.value.replace(/(\d{3})(\d)/, '$1.$2');
+    input.value = input.value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+}
+
