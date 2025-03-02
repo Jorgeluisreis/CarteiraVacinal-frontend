@@ -1,5 +1,5 @@
 <div class="modal fade" id="modalCarteiraVacinal" tabindex="-1" aria-labelledby="modalCarteiraVacinalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modalCarteiraVacinalLabel">Carteira Vacinal</h5>
@@ -42,7 +42,8 @@
                         <p>Qtde de vacinas não aplicáveis: <span id="quantidadeNaoAplicaveis"></span></p>
                     </div>
                     <h5>Imunizações</h5>
-                    <div id="carteiraImunizacoesContainer"></div>
+                    <button id="btnExcluirTodasImunizacoes" class="btn btn-danger mt-3" style="display: none;">Excluir Todas as Imunizações</button>
+                    <div id="carteiraImunizacoesContainer" class="table-responsive"></div>
                 </div>
             </div>
         </div>

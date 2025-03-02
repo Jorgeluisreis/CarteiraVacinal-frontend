@@ -1,46 +1,54 @@
 <div class="modal fade" id="modalCadastroImunizacao" tabindex="-1" aria-labelledby="modalCadastroImunizacaoLabel" aria-hidden="true">
-    <div class="modal-dialog modal-fullscreen-lg-down">
-        <div class="modal-content container mt-5">
-            <div class="modal-header d-flex justify-content-between">
-                <h1 class="modal-title fs">Cadastrar Imunização</h1>
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalCadastroImunizacaoLabel">Cadastrar Imunização</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
             </div>
             <div class="modal-body">
-                <form id="formCadastroImunizacao">
-                    <div class="form-group mb-3">
-                        <label class="form-label" for="paciente">Paciente</label>
-                        <select class="form-select" id="paciente" required>
-                            <option value="" disabled selected>Selecione o paciente</option>
-                        </select>
+                <form id="formCadastroImunizacao" class="container">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="paciente" class="form-label">Paciente</label>
+                            <select class="form-select" id="paciente" required>
+                                <option value="" disabled selected>Selecione o paciente</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="vacina" class="form-label">Vacina</label>
+                            <select class="form-select" id="vacina" required>
+                                <option value="" disabled selected>Selecione a vacina - dose</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="form-group mb-3">
-                        <label class="form-label" for="vacina">Vacina</label>
-                        <select class="form-select" id="vacina" required>
-                            <option value="" disabled selected>Selecione a vacina - dose</option>
-                        </select>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="dataAplicacao" class="form-label">Data de Aplicação</label>
+                            <input type="date" class="form-control" id="dataAplicacao" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="fabricante" class="form-label">Fabricante</label>
+                            <input type="text" class="form-control" id="fabricante" placeholder="Nome do fabricante">
+                        </div>
                     </div>
-                    <div class="form-group mb-3">
-                        <label class="form-label" for="dataAplicacao">Data de Aplicação</label>
-                        <input class="form-control" type="date" id="dataAplicacao" required>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="lote" class="form-label">Lote</label>
+                            <input type="text" class="form-control" id="lote" placeholder="Número do lote">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="localAplicacao" class="form-label">Local de Aplicação</label>
+                            <input type="text" class="form-control" id="localAplicacao" placeholder="Local de aplicação">
+                        </div>
                     </div>
-                    <div class="form-group mb-3">
-                        <label class="form-label" for="fabricante">Fabricante</label>
-                        <input class="form-control" type="text" id="fabricante" placeholder="Nome do fabricante">
-                    </div>
-                    <div class="form-group mb-3">
-                        <label class="form-label" for="lote">Lote</label>
-                        <input class="form-control" type="text" id="lote" placeholder="Número do lote">
-                    </div>
-                    <div class="form-group mb-3">
-                        <label class="form-label" for="localAplicacao">Local de Aplicação</label>
-                        <input class="form-control" type="text" id="localAplicacao" placeholder="Local de aplicação">
-                    </div>
-                    <div class="form-group mb-3">
-                        <label class="form-label" for="profissionalAplicador">Profissional Aplicador</label>
-                        <input class="form-control" type="text" id="profissionalAplicador" placeholder="Nome do profissional aplicador">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="profissionalAplicador" class="form-label">Profissional Aplicador</label>
+                            <input type="text" class="form-control" id="profissionalAplicador" placeholder="Nome do profissional aplicador">
+                        </div>
                     </div>
                     <div class="d-grid col-6 mx-auto">
-                        <button id="btnCadastrarImunizacao" class="mb-3 btn btn-success" type="button">Cadastrar</button>
+                        <button id="btnCadastrarImunizacao" class="btn btn-success" type="button">Cadastrar</button>
                     </div>
                 </form>
             </div>

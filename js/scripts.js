@@ -296,6 +296,9 @@ function abrirModalCarteiraVacinal(id) {
     loading.style.display = "block";
     carteiraContent.style.display = "none";
 
+    const modalCarteiraVacinal = new bootstrap.Modal(document.getElementById("modalCarteiraVacinal"));
+    modalCarteiraVacinal.show();
+
     fetch(url + `/paciente/consultar/${id}`)
         .then(response => response.json())
         .then(paciente => {
@@ -316,18 +319,71 @@ function abrirModalCarteiraVacinal(id) {
             loading.style.display = "none";
             carteiraContent.style.display = "block";
 
-            const modalCarteiraVacinal = new bootstrap.Modal(document.getElementById("modalCarteiraVacinal"));
-            modalCarteiraVacinal.show();
+            const btnExcluirTodasImunizacoes = document.getElementById("btnExcluirTodasImunizacoes");
+            btnExcluirTodasImunizacoes.onclick = function() {
+                confirmarExclusaoTodasImunizacoes(document.getElementById("carteiraId").value, document.getElementById("carteiraNome").value);
+            };
         })
         .catch(error => {
             console.error("Erro ao carregar os dados do paciente:", error);
             exibirToast(`Erro ao carregar os dados do paciente: ${error.message}`);
+            loading.style.display = "none";
         });
+}
+
+async function excluirTodasImunizacoes(id) {
+    try {
+        const response = await fetch(`${url}/imunizacao/excluir/paciente/${id}`, {
+            method: "DELETE",
+            headers: {
+                'Content-Type': 'application/json',
+                "Accept": "application/json"
+            },
+            mode: "cors"
+        });
+
+        let data;
+        try {
+            data = await response.json();
+        } catch (error) {
+            throw new Error("Resposta da API não está no formato JSON.");
+        }
+
+        if (!response.ok) {
+            throw new Error(data.message || "Erro ao excluir todas as imunizações.");
+        }
+
+        exibirToast(data.message || "Todas as imunizações foram excluídas com sucesso!");
+
+        const modalConfirmarExclusaoImunizacoes = bootstrap.Modal.getInstance(document.getElementById("modalConfirmarExclusaoImunizacoes"));
+        if (modalConfirmarExclusaoImunizacoes) {
+            modalConfirmarExclusaoImunizacoes.hide();
+        }
+
+        const modalCarteiraVacinal = bootstrap.Modal.getInstance(document.getElementById("modalCarteiraVacinal"));
+        if (modalCarteiraVacinal) {
+            modalCarteiraVacinal.hide();
+        }
+
+        setTimeout(() => {
+            abrirModalCarteiraVacinal(id);
+        }, 500);
+    } catch (error) {
+        console.error("Erro ao excluir todas as imunizações:", error);
+        exibirToast(`Erro ao excluir todas as imunizações: ${error.message}`);
+    }
 }
 
 function exibirImunizacoesModal(imunizacoes) {
     const container = document.getElementById("carteiraImunizacoesContainer");
     container.innerHTML = "";
+
+    const btnExcluirTodasImunizacoes = document.getElementById("btnExcluirTodasImunizacoes");
+    if (imunizacoes.length > 1) {
+        btnExcluirTodasImunizacoes.style.display = "block";
+    } else {
+        btnExcluirTodasImunizacoes.style.display = "none";
+    }
 
     if (!imunizacoes || imunizacoes.length === 0) {
         const mensagem = document.createElement("p");
@@ -337,7 +393,7 @@ function exibirImunizacoesModal(imunizacoes) {
     }
 
     const table = document.createElement("table");
-    table.className = "table table-striped table-center";
+    table.className = "table table-striped table-responsive";
 
     const thead = document.createElement("thead");
     thead.innerHTML = `
@@ -771,7 +827,7 @@ async function listarPacientes(id) {
 
         if (!response.ok) {
             if (response.status === 500) {
-                exibirToast("Não Localizado");
+                exibirMensagemNaoEncontrado();
                 return;
             }
             throw new Error(`Erro na API: ${response.status} - ${response.statusText}`);
@@ -779,15 +835,26 @@ async function listarPacientes(id) {
 
         const data = await response.json();
         if (data.length === 0 || (id && !data.id)) {
-            exibirToast("Não Localizado");
+            exibirMensagemNaoEncontrado();
         } else {
             exibirPacientes(data);
         }
     } catch (error) {
         console.error("Erro ao listar pacientes:", error);
-        exibirToast(`Erro ao listar pacientes: ${error.message}`);
+        exibirMensagemNaoEncontrado();
     }
 }
+
+function exibirMensagemNaoEncontrado() {
+    const resultContainer = document.getElementById("resultContainer");
+    resultContainer.innerHTML = "";
+
+    const mensagem = document.createElement("p");
+    mensagem.textContent = "Não há pacientes cadastrados.";
+    mensagem.className = "text-center";
+    resultContainer.appendChild(mensagem);
+}
+
 
 function exibirPacientes(pacientes) {
     const resultContainer = document.getElementById("resultContainer");
@@ -797,44 +864,87 @@ function exibirPacientes(pacientes) {
         pacientes = [pacientes];
     }
 
-    const table = document.createElement("table");
-    table.className = "table table-striped table-center";
+    const isMobile = window.innerWidth <= 768;
 
-    const thead = document.createElement("thead");
-    thead.innerHTML = `
-        <tr>
-            <th>ID</th>
-            <th>Nome</th>
-            <th>CPF</th>
-            <th>Sexo</th>
-            <th>Data de Nascimento</th>
-            <th>Ações</th>
-        </tr>
-    `;
-    table.appendChild(thead);
+    if (isMobile) {
+        pacientes.forEach(paciente => {
+            const dataNascimentoFormatada = formatarData(paciente.dataNascimento);
+            const cpfMascarado = mascararCPF(paciente.cpf);
 
-    const tbody = document.createElement("tbody");
-    pacientes.forEach(paciente => {
-        const dataNascimentoFormatada = formatarData(paciente.dataNascimento);
-        const cpfMascarado = mascararCPF(paciente.cpf);
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-            <td>${paciente.id}</td>
-            <td>${paciente.nome}</td>
-            <td>${cpfMascarado}</td>
-            <td>${paciente.sexo}</td>
-            <td>${dataNascimentoFormatada}</td>
-            <td>
-                <button class="btn btn-warning btn-sm" onclick="editarPaciente(${paciente.id})">Editar</button>
-                <button class="btn btn-danger btn-sm" onclick="confirmarExclusao(${paciente.id}, '${paciente.nome}')">Excluir</button>
-                <button class="btn btn-info btn-sm" onclick="abrirModalCarteiraVacinal(${paciente.id})">Carteira Vacinal</button>
-            </td>
+            const card = document.createElement("div");
+            card.className = "card mb-3";
+
+            const cardBody = document.createElement("div");
+            cardBody.className = "card-body";
+
+            cardBody.innerHTML = `
+                <h5 class="card-title">${paciente.nome}</h5>
+                <p class="card-text"><strong>ID:</strong> ${paciente.id}</p>
+                <p class="card-text"><strong>CPF:</strong> ${cpfMascarado}</p>
+                <p class="card-text"><strong>Sexo:</strong> ${paciente.sexo}</p>
+                <p class="card-text"><strong>Data de Nascimento:</strong> ${dataNascimentoFormatada}</p>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="acoesDropdown${paciente.id}" data-bs-toggle="dropdown" aria-expanded="false">
+                        Ações
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="acoesDropdown${paciente.id}">
+                        <li><a class="dropdown-item" href="#" onclick="editarPaciente(${paciente.id})">Editar</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="confirmarExclusao(${paciente.id}, '${paciente.nome}')">Excluir</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="abrirModalCarteiraVacinal(${paciente.id})">Carteira Vacinal</a></li>
+                    </ul>
+                </div>
+            `;
+
+            card.appendChild(cardBody);
+            resultContainer.appendChild(card);
+        });
+    } else {
+        const table = document.createElement("table");
+        table.className = "table table-striped table-responsive";
+
+        const thead = document.createElement("thead");
+        thead.innerHTML = `
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>CPF</th>
+                <th>Sexo</th>
+                <th>Data de Nascimento</th>
+                <th>Ações</th>
+            </tr>
         `;
-        tbody.appendChild(tr);
-    });
-    table.appendChild(tbody);
+        table.appendChild(thead);
 
-    resultContainer.appendChild(table);
+        const tbody = document.createElement("tbody");
+        pacientes.forEach(paciente => {
+            const dataNascimentoFormatada = formatarData(paciente.dataNascimento);
+            const cpfMascarado = mascararCPF(paciente.cpf);
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+                <td>${paciente.id}</td>
+                <td>${paciente.nome}</td>
+                <td>${cpfMascarado}</td>
+                <td>${paciente.sexo}</td>
+                <td>${dataNascimentoFormatada}</td>
+                <td>
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="acoesDropdown${paciente.id}" data-bs-toggle="dropdown" aria-expanded="false">
+                            Ações
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="acoesDropdown${paciente.id}">
+                            <li><a class="dropdown-item" href="#" onclick="editarPaciente(${paciente.id})">Editar</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="confirmarExclusao(${paciente.id}, '${paciente.nome}')">Excluir</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="abrirModalCarteiraVacinal(${paciente.id})">Carteira Vacinal</a></li>
+                        </ul>
+                    </div>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+        table.appendChild(tbody);
+
+        resultContainer.appendChild(table);
+    }
 }
 
 function formatarData(data) {
@@ -943,6 +1053,19 @@ async function atualizarPaciente(id) {
         console.error("Erro ao atualizar paciente:", error);
         exibirToast(`Erro ao atualizar paciente: ${error.message}`);
     }
+}
+
+function confirmarExclusaoTodasImunizacoes(id, nome) {
+    const mensagemConfirmacaoImunizacoes = document.getElementById("mensagemConfirmacaoImunizacoes");
+    mensagemConfirmacaoImunizacoes.textContent = `Tem certeza que deseja excluir todas as imunizações do paciente ${nome}?`;
+
+    const btnConfirmarExclusaoImunizacoes = document.getElementById("btnConfirmarExclusaoImunizacoes");
+    btnConfirmarExclusaoImunizacoes.onclick = function() {
+        excluirTodasImunizacoes(id);
+    };
+
+    const modalConfirmarExclusaoImunizacoes = new bootstrap.Modal(document.getElementById("modalConfirmarExclusaoImunizacoes"));
+    modalConfirmarExclusaoImunizacoes.show();
 }
 
 function confirmarExclusao(id, nome) {
@@ -1074,10 +1197,15 @@ function calcularIdadeEmMeses(dataNascimento) {
     const [dia, mes, ano] = dataNascimento.split("/");
     const dataNasc = new Date(`${ano}-${mes}-${dia}`);
     const dataAtual = new Date();
-    const idadeEmMeses = (dataAtual.getFullYear() - dataNasc.getFullYear()) * 12 + (dataAtual.getMonth() - dataNasc.getMonth());
+
+    let idadeEmMeses = (dataAtual.getFullYear() - dataNasc.getFullYear()) * 12 + (dataAtual.getMonth() - dataNasc.getMonth());
+
+    if (dataAtual.getDate() < dataNasc.getDate()) {
+        idadeEmMeses--;
+    }
+
     return idadeEmMeses;
 }
-
 function exibirEstatisticas(estatisticas) {
     document.getElementById("quantidadeAplicadas").textContent = estatisticas.quantidadeAplicadas;
     document.getElementById("quantidadeProximas").textContent = estatisticas.quantidadeProximas;
