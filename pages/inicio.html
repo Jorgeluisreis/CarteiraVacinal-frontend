@@ -88,24 +88,27 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            window.scrollTo(0, 0); // Rola a página para o topo ao carregar
+    window.scrollTo(0, 0);
 
-            const images = document.querySelectorAll(".hidden");
+    const images = document.querySelectorAll(".hidden");
 
-            function handleScroll() {
-                images.forEach((img) => {
-                    const imgPosition = img.getBoundingClientRect().top;
-                    const windowHeight = window.innerHeight;
+    function handleScroll() {
+        images.forEach((img) => {
+            const imgPosition = img.getBoundingClientRect().top;
+            const imgBottom = img.getBoundingClientRect().bottom;
+            const windowHeight = window.innerHeight;
 
-                    if (imgPosition < windowHeight - 100) {
-                        img.classList.add("show");
-                    }
-                });
+            if (imgPosition < windowHeight - 100 && imgBottom > 100) {
+                img.classList.add("show");
+            } else {
+                img.classList.remove("show");
             }
-
-            window.addEventListener("scroll", handleScroll);
-            handleScroll();
         });
+    }
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+});
 
         fetch("/components/header.html")
             .then(response => response.text())
