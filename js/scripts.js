@@ -458,7 +458,7 @@ function abrirModalEditarImunizacao(id) {
 
             document.getElementById("paciente").value = pacienteNome;
             document.getElementById("vacina").value = `${vacinaNome} - ${dose}`;
-            document.getElementById("dataAplicacao").value = formatarDataParaInput(dataAplicacao);
+            document.getElementById("dataAplicacao").value = formatarDataParaInputModal(dataAplicacao);
             document.getElementById("fabricante").value = fabricante;
             document.getElementById("lote").value = lote;
             document.getElementById("localAplicacao").value = localAplicacao;
@@ -1060,7 +1060,7 @@ function formatarDataParaInput(data) {
     return `${ano}-${mes}-${dia}`;
 }
 
-function formatarDataParaInput(data) {
+function formatarDataParaInputModal(data) {
     const [dia, mes, ano] = data.split('/');
     return `${ano}-${mes}-${dia}`;
 }
