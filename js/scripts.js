@@ -414,6 +414,7 @@ function exibirImunizacoesModal(imunizacoes) {
     const tbody = document.createElement("tbody");
     imunizacoes.forEach(imunizacao => {
         const tr = document.createElement("tr");
+        tr.setAttribute("data-id", imunizacao.id);
         tr.innerHTML = `
             <td>${imunizacao.id}</td>
             <td>${imunizacao.vacina}</td>
@@ -424,6 +425,7 @@ function exibirImunizacoesModal(imunizacoes) {
             <td>${imunizacao.localAplicacao}</td>
             <td>${imunizacao.profissionalAplicador}</td>
             <td>
+                <button class="btn btn-warning btn-sm" onclick="abrirModalEditarImunizacao(${imunizacao.id})">Editar</button>
                 <button class="btn btn-danger btn-sm" onclick="confirmarExclusaoImunizacao(${imunizacao.id}, '${imunizacao.vacina}')">Excluir</button>
             </td>
         `;
@@ -432,6 +434,99 @@ function exibirImunizacoesModal(imunizacoes) {
     table.appendChild(tbody);
 
     container.appendChild(table);
+}
+
+function abrirModalEditarImunizacao(id) {
+    fetch(`/components/modal_editar_imunizacao.html`)
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById("modalContainer").innerHTML = html;
+
+            const modalElement = document.getElementById('modalEditarImunizacao');
+            const modal = new bootstrap.Modal(modalElement);
+            modal.show();
+
+            const pacienteNome = document.getElementById("carteiraNome").value;
+            const imunizacaoRow = document.querySelector(`#carteiraImunizacoesContainer tr[data-id="${id}"]`);
+            const vacinaNome = imunizacaoRow.querySelector("td:nth-child(2)").textContent;
+            const dose = imunizacaoRow.querySelector("td:nth-child(3)").textContent;
+            const dataAplicacao = imunizacaoRow.querySelector("td:nth-child(4)").textContent;
+            const fabricante = imunizacaoRow.querySelector("td:nth-child(5)").textContent;
+            const lote = imunizacaoRow.querySelector("td:nth-child(6)").textContent;
+            const localAplicacao = imunizacaoRow.querySelector("td:nth-child(7)").textContent;
+            const profissionalAplicador = imunizacaoRow.querySelector("td:nth-child(8)").textContent;
+
+            document.getElementById("paciente").value = pacienteNome;
+            document.getElementById("vacina").value = `${vacinaNome} - ${dose}`;
+            document.getElementById("dataAplicacao").value = formatarDataParaInput(dataAplicacao);
+            document.getElementById("fabricante").value = fabricante;
+            document.getElementById("lote").value = lote;
+            document.getElementById("localAplicacao").value = localAplicacao;
+            document.getElementById("profissionalAplicador").value = profissionalAplicador;
+
+            carregarVacinas().then(vacinas => {
+                const vacina = vacinas.find(v => v.vacina === vacinaNome && v.dose === dose);
+                if (vacina) {
+                    document.getElementById("vacina").dataset.idDose = vacina.id;
+                }
+            });
+
+            document.getElementById("btnSalvarEdicaoImunizacao").onclick = function() {
+                salvarEdicaoImunizacao(id);
+            };
+        })
+        .catch(error => console.error("Erro ao carregar o modal de edição de imunização:", error));
+}
+
+async function salvarEdicaoImunizacao(id) {
+    const idPaciente = document.getElementById("carteiraId").value;
+    const idDose = document.getElementById("vacina").dataset.idDose;
+    const dataAplicacao = document.getElementById("dataAplicacao").value;
+    const fabricante = document.getElementById("fabricante").value.trim();
+    const lote = document.getElementById("lote").value.trim();
+    const localAplicacao = document.getElementById("localAplicacao").value.trim();
+    const profissionalAplicador = document.getElementById("profissionalAplicador").value.trim();
+
+    const dataAplicacaoFormatada = formatarDataParaEnvio(dataAplicacao);
+
+    const imunizacaoData = { idPaciente, idDose, dataAplicacao: dataAplicacaoFormatada, fabricante, lote, localAplicacao, profissionalAplicador };
+
+    try {
+        const response = await fetch(`${url}/imunizacao/alterar/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify(imunizacaoData),
+            mode: "cors"
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || "Erro ao editar a imunização.");
+        }
+
+        exibirToast(data.message || "Imunização editada com sucesso!");
+
+        const modalEditarImunizacao = bootstrap.Modal.getInstance(document.getElementById("modalEditarImunizacao"));
+        if (modalEditarImunizacao) {
+            modalEditarImunizacao.hide();
+        }
+
+        const modalCarteiraVacinal = bootstrap.Modal.getInstance(document.getElementById("modalCarteiraVacinal"));
+        if (modalCarteiraVacinal) {
+            modalCarteiraVacinal.hide();
+        }
+
+        setTimeout(() => {
+            abrirModalCarteiraVacinal(idPaciente);
+        }, 500);
+    } catch (error) {
+        console.error("Erro ao editar imunização:", error);
+        exibirToast(`Erro ao editar imunização: ${error.message}`);
+    }
 }
 
 function carregarPacientes() {
@@ -449,19 +544,15 @@ function carregarPacientes() {
         .catch(error => console.error("Erro ao carregar pacientes:", error));
 }
 
-function carregarVacinas() {
-    fetch(url + "/vacinas/consultar")
-        .then(response => response.json())
-        .then(vacinas => {
-            const vacinaSelect = document.getElementById("vacina");
-            vacinas.forEach(vacina => {
-                const option = document.createElement("option");
-                option.value = vacina.id;
-                option.textContent = `${vacina.vacina} - ${vacina.dose}`;
-                vacinaSelect.appendChild(option);
-            });
-        })
-        .catch(error => console.error("Erro ao carregar vacinas:", error));
+async function carregarVacinas() {
+    try {
+        const response = await fetch(url + "/vacinas/consultar");
+        const vacinas = await response.json();
+        return vacinas;
+    } catch (error) {
+        console.error("Erro ao carregar vacinas:", error);
+        return [];
+    }
 }
 
 async function cadastrarImunizacao() {
@@ -966,6 +1057,11 @@ function exibirToast(mensagem) {
 
 function formatarDataParaInput(data) {
     const [dia, mes, ano] = data.split("-");
+    return `${ano}-${mes}-${dia}`;
+}
+
+function formatarDataParaInput(data) {
+    const [dia, mes, ano] = data.split('/');
     return `${ano}-${mes}-${dia}`;
 }
 
