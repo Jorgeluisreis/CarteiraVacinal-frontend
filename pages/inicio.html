@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light">
     <title>Carteira Vacinal - Um jeito simples de ter controle sobre as suas imunizações</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="../assets/css/styles.css">
@@ -19,15 +20,18 @@
 
     <div id="headerContainer" class="fixed-top"></div>
 
-    <section class="slogan text-center py-5 bg-light mt-5">
-        <h1 class="titulo display-4">Carteira Vacinal</h1>
-        <p class="texto-slogan lead">Um jeito simples de ter controle sobre as suas imunizações</p>
-    </section>
+    
+        <section class="slogan text-center py-5 mt-5">
+            <h1 class="titulo display-4 fw-semibold">Carteira Vacinal</h1>
+            <p class="texto-slogan lead">Um jeito simples de ter controle sobre as suas imunizações</p>
+        </section>
+    
 
     <div class="container my-5">
         <div class="row align-items-center mb-5">
             <div class="col-md-6">
-                <img class="img-fluid hidden" src="../img/inicio1.jpg" alt="Ilustração de uma paciente demonstrando que tomou a vacina">
+                <img class="img-fluid hidden" src="../img/inicio1.jpg"
+                    alt="Ilustração de uma paciente demonstrando que tomou a vacina">
             </div>
             <div class="col-md-6 hidden">
                 <h2 class="h4">Controle Vacinal</h2>
@@ -51,7 +55,8 @@
             </div>
             <div class="col-md-6 hidden">
                 <h2 class="h4">Facilidade de Acesso e Compartilhamento</h2>
-                <p>Acesse seu histórico de vacinas a qualquer momento e qualquer lugar tornando mais fácil o compartilhamento com médicos, escolas e empregadores</p>
+                <p>Acesse seu histórico de vacinas a qualquer momento e qualquer lugar tornando mais fácil o
+                    compartilhamento com médicos, escolas e empregadores</p>
             </div>
         </div>
 
@@ -99,7 +104,7 @@
             }
 
             window.addEventListener("scroll", handleScroll);
-            handleScroll(); 
+            handleScroll();
         });
 
         fetch("/components/header.html")
@@ -124,6 +129,8 @@
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    
 </body>
 
 </html>
