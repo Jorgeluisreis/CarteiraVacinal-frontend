@@ -1,8 +1,10 @@
 :root {
     --primary-color: #2a8a21;
     --text-color: white;
-    --background-color: white;
+    --background-color: #ffffef;
+
 }
+
 
 .home {
     font-family: 'Poppins', sans-serif;
@@ -16,17 +18,16 @@ body {
     padding: 0;
 }
 
+
 .slogan {
     font-family: 'Poppins', sans-serif;
     margin-top: 75px;
 }
 
-.slogan h1 {
-    font-size: 50px;
-}
 
 .slogan p {
     font-size: 20px;
+
 }
 
 .hidden {
@@ -56,7 +57,7 @@ body {
     z-index: 1049;
 }
 
-#modalConfirmarExclusaoImunizacao + .modal-backdrop.show {
+#modalConfirmarExclusaoImunizacao+.modal-backdrop.show {
     z-index: 1059;
 }
 
@@ -242,6 +243,7 @@ body {
     .titulo {
         margin-top: 40px;
     }
+
     .texto_decoracao {
         padding: 0 15px;
     }
@@ -273,7 +275,8 @@ body {
         font-size: 12px;
     }
 
-    .table-responsive th, .table-responsive td {
+    .table-responsive th,
+    .table-responsive td {
         padding: 0.5rem;
     }
 
@@ -305,7 +308,7 @@ body {
 @media (min-width: 769px) and (max-width: 992px) {
     .desenvolvedores-container {
         grid-template-columns: 1fr 1fr;
-        
+
     }
 
     .titulo {
@@ -318,6 +321,8 @@ body {
         margin-top: 100px;
     }
 }
+
+
 
 #loading {
     display: none;

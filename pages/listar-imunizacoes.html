@@ -17,22 +17,30 @@
 
 <body class="home d-flex flex-column min-vh-100">
     <div id="headerContainer"></div>
-    <div class="container mt-5 flex-grow-1">
-        <h1 class="titulo text-center">Listar Imunizações</h1>
-        <div class="search-form mb-4 text-center">
-            <input type="text" id="searchId" class="form-control mb-2" placeholder="Digite o ID" style="max-width: 300px; margin: 0 auto;">
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="checkboxPaciente">
-                <label class="form-check-label" for="checkboxPaciente">Por Paciente</label>
+<div class="container mt-5 flex-grow-1">
+    <h1 class="titulo text-center">Listar Imunizações</h1>
+    <div class="search-form mb-4 text-center">
+        <input type="text" id="searchId" class="form-control mb-5" placeholder="Digite o ID" style="max-width: 300px; margin: 0 auto;">
+        
+        <div class="d-flex justify-content-center align-items-center gap-4">
+            <div class="form-check d-flex align-items-center gap-2">
+                <input class="form-check-input" type="checkbox" id="checkboxPaciente" style="width: 1.375em; height: 1.375em;">
+                <label class="form-check-label mb-0" for="checkboxPaciente">Por Paciente</label>
             </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="checkboxImunizacao">
-                <label class="form-check-label" for="checkboxImunizacao">Por Imunização</label>
+            <div class="form-check d-flex align-items-center gap-2">
+                <input class="form-check-input" type="checkbox" id="checkboxImunizacao" style="width: 1.375em; height: 1.375em;">
+                <label class="form-check-label mb-0" for="checkboxImunizacao">Por Imunização</label>
             </div>
             <button id="btnPesquisarImunizacao" class="btn btn-primary">Pesquisar</button>
         </div>
-        <div id="resultContainer"></div>
     </div>
+    <div id="resultContainer"></div>
+</div>
+
+
+
+
+
 
     <div id="footerContainer" class="mt-auto"></div>
     <div id="modalContainer"></div>
