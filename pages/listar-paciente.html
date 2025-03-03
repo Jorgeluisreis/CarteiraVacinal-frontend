@@ -84,7 +84,7 @@
                 })
                 .catch(error => console.error("Erro ao carregar o modal de exclusão de todas as imunizações:", error));
 
-            fetch("/components/modal-carteira-vacinal.html")
+            fetch("/components/modal_carteira_vacinal.html")
                 .then(response => response.text())
                 .then(html => {
                     document.body.insertAdjacentHTML('beforeend', html);
