@@ -6,6 +6,8 @@ COPY nginx.conf /etc/nginx/conf.d/nginx.conf
 
 COPY . /usr/share/nginx/html
 
+RUN chown -R nginx:nginx /usr/share/nginx/html
+
 EXPOSE 3301
 
 CMD ["nginx", "-g", "daemon off;"]
