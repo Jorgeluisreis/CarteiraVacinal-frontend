@@ -8,7 +8,7 @@ RUN echo 'server { \
     location / { \
         root /usr/share/nginx/html; \
         index index.html; \
-        try_files $uri $uri/ /index.html; \
+        try_files $uri $uri/ /inicio.html; \
     } \
     location /components/ { \
         alias /usr/share/nginx/html/components/; \
