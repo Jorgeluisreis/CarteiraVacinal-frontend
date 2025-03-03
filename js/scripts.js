@@ -84,6 +84,7 @@ function abrirModalCadastroImunizacao(event) {
             const modal = new bootstrap.Modal(modalElement);
             modal.show();
 
+            // Carregar pacientes e vacinas
             carregarPacientes();
             carregarVacinas();
 
@@ -548,10 +549,26 @@ async function carregarVacinas() {
     try {
         const response = await fetch(url + "/vacinas/consultar");
         const vacinas = await response.json();
-        return vacinas;
+
+        const vacinaSelect = document.getElementById("vacina");
+        vacinaSelect.innerHTML = '';
+
+        const optionDefault = document.createElement("option");
+        optionDefault.value = "";
+        optionDefault.disabled = true;
+        optionDefault.selected = true;
+        optionDefault.textContent = "Selecione a vacina - dose";
+        vacinaSelect.appendChild(optionDefault);
+
+        vacinas.forEach(vacina => {
+            const option = document.createElement("option");
+            option.value = vacina.id;
+            option.textContent = `${vacina.vacina} - ${vacina.dose}`;
+            vacinaSelect.appendChild(option);
+        });
+
     } catch (error) {
         console.error("Erro ao carregar vacinas:", error);
-        return [];
     }
 }
 
