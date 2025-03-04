@@ -128,8 +128,6 @@ body {
 
 .navbar {
     background-color: var(--primary-color);
-    font-family: 'Poppins', sans-serif;
-    font-size: 16px;
     padding: 10px 0;
     display: flex;
     justify-content: space-between;
@@ -141,7 +139,7 @@ body {
 .logo {
     mix-blend-mode: normal !important;
     filter: none !important;
-    -webkit-filter: none !important;
+    -webkit-filter: none !important; /* Para garantir compatibilidade com WebKit */
 }
 
 .nav-container {
@@ -346,4 +344,12 @@ body {
 
 #carteiraContent {
     display: none;
+}
+
+.tecnologias {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Reduziu o gap para aproximar os itens */
+    margin: 50px auto;
+    background-color: #ffffef;
 }
