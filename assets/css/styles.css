@@ -139,7 +139,7 @@ body {
 .logo {
     mix-blend-mode: normal !important;
     filter: none !important;
-    -webkit-filter: none !important; /* Para garantir compatibilidade com WebKit */
+    -webkit-filter: none !important;
 }
 
 .nav-container {
