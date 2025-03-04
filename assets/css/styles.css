@@ -137,8 +137,9 @@ body {
 }
 
 .logo {
-    max-width: 55px;
-    background: transparent;
+    mix-blend-mode: normal !important;
+    filter: none !important;
+    -webkit-filter: none !important; /* Para garantir compatibilidade com WebKit */
 }
 
 .nav-container {
