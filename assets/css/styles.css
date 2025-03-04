@@ -128,6 +128,8 @@ body {
 
 .navbar {
     background-color: var(--primary-color);
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
     padding: 10px 0;
     display: flex;
     justify-content: space-between;
