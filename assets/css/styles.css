@@ -30,9 +30,15 @@ body {
 
 }
 
-.hidden {
+.slide-left {
     opacity: 0;
     transform: translateX(-100%);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.slide-right {
+    opacity: 0;
+    transform: translateX(100%);
     transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }
 
@@ -40,7 +46,6 @@ body {
     opacity: 1;
     transform: translateX(0);
 }
-
 .toast-container {
     z-index: 1060;
 }
@@ -85,6 +90,7 @@ body {
     justify-content: center;
     gap: 50px;
     margin: 50px auto;
+    background-color: #ffffef;
 }
 
 .desenvolvedores-container {
@@ -93,6 +99,7 @@ body {
     gap: 30px;
     margin-top: 20px;
     justify-items: center;
+    background-color: #ffffef;
 }
 
 .desenvolvedores {
@@ -131,6 +138,7 @@ body {
 
 .logo {
     max-width: 55px;
+    background: transparent;
 }
 
 .nav-container {

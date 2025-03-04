@@ -15,12 +15,12 @@
     <title>Sobre</title>
 </head>
 
-<body>
+<body style="background-color: #ffffef;">
     <div id="headerContainer" class="fixed-top"></div>
     <main class="container mt-5 pt-5">
         <section>
-            <h1 class="titulo text-center">SOBRE</h1>
-            <div class="texto_decoracao mx-auto">
+            <h1 class="titulo text-center slide-left">Sobre</h1>
+            <div class="texto_decoracao mx-auto slide-left">
                 <p>
                     O projeto tem como objetivo desenvolver a criação de um sistema para gerenciamento das vacinas
                     aplicadas aos membros de uma família. O sistema permitirá o cadastro dos integrantes, registrando
@@ -47,7 +47,7 @@
                 </div>
             </div>
             <section class="equipes row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-                <div class="col">
+                <div class="col img-fluid slide-left">
                     <div class="card h-100 text-center">
                         <img src="/img/Jorge.jpeg" class="card-img-top rounded-circle mx-auto mt-3" alt="Foto líder técnico Jorge Luis" style="width: 150px; height: 150px;">
                         <div class="card-body">
@@ -62,7 +62,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col">
+                <div class="col slide-right">
                     <div class="card h-100 text-center">
                         <img src="/img/David.jpeg" class="card-img-top rounded-circle mx-auto mt-3" alt="Foto desenvolvedor David Diniz" style="width: 150px; height: 150px;">
                         <div class="card-body">
@@ -77,7 +77,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col">
+                <div class="col slide-left">
                     <div class="card h-100 text-center">
                         <img src="/img/Aline.jpeg" class="card-img-top rounded-circle mx-auto mt-3" alt="Foto desenvolvedor Aline Maria" style="width: 150px; height: 150px;">
                         <div class="card-body">
@@ -92,7 +92,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col">
+                <div class="col slide-right">
                     <div class="card h-100 text-center">
                         <img src="/img/Lais.jpg" class="card-img-top rounded-circle mx-auto mt-3" alt="Foto desenvolvedor Laís Vieira" style="width: 150px; height: 150px;">
                         <div class="card-body">
@@ -107,7 +107,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col">
+                <div class="col slide-left">
                     <div class="card h-100 text-center">
                         <img src="/img/Cecilia.jpeg" class="card-img-top rounded-circle mx-auto mt-3" alt="Foto desenvolvedor Cecília Rodrigues" style="width: 150px; height: 150px;">
                         <div class="card-body">
@@ -122,7 +122,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col">
+                <div class="col slide-right">
                     <div class="card h-100 text-center">
                         <img src="/img/Nilson.jpeg" class="card-img-top rounded-circle mx-auto mt-3" alt="Foto desenvolvedor Nilson Eduardo" style="width: 150px; height: 150px;">
                         <div class="card-body">
@@ -156,6 +156,30 @@
     <div id="modalContainer"></div>
 
     <script>
+
+document.addEventListener("DOMContentLoaded", function () {
+        window.scrollTo(0, 0);
+
+        const elementosOcultos = document.querySelectorAll(".slide-left, .slide-right");
+
+        function handleScroll() {
+            elementosOcultos.forEach((el) => {
+                const positionTop = el.getBoundingClientRect().top;
+                const positionBottom = el.getBoundingClientRect().bottom;
+                const windowHeight = window.innerHeight;
+
+                if (positionTop < windowHeight - 100 && positionBottom > 100) {
+                    el.classList.add("show");
+                } else {
+                    el.classList.remove("show");
+                }
+            });
+        }
+
+        window.addEventListener("scroll", handleScroll);
+        handleScroll();
+    });
+
         fetch("/components/header.html")
             .then(response => response.text())
             .then(html => {
