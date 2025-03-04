@@ -81,8 +81,10 @@ body {
 }
 
 .apresentacao {
+    text-align: center;
     display: flex;
     margin: auto;
+    width: 50%;
 }
 
 .equipes {
