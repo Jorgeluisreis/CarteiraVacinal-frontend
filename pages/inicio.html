@@ -3,84 +3,72 @@
 
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="/img/favicon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tela inicial</title>
+    <title>Carteira Vacinal - Um jeito simples de ter controle sobre as suas imunizações</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="../assets/css/styles.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
         rel="stylesheet">
 </head>
 
 <body class="home">
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const images = document.querySelectorAll(".hidden");
+    <div id="headerContainer" class="fixed-top"></div>
 
-            function handleScroll() {
-                images.forEach((img) => {
-                    const imgPosition = img.getBoundingClientRect().top;
-                    const windowHeight = window.innerHeight;
-
-                    if (imgPosition < windowHeight - 100) {
-                        img.classList.add("show");
-                    }
-                });
-            }
-
-            window.addEventListener("scroll", handleScroll);
-            handleScroll(); 
-        });
-    </script>
-
-    <div id="headerContainer"></div>
-
-    <section class="slogan">
-        <h1 class="titulo">Carteira Vacinal</h1>
-        <p class="texto-slogan">Um jeito simples de ter controle sobre as suas imunizações</p>
-    </section>
-
-    <div class="textos">
-        <section class="section1">
-            <img class="hidden" src="../img/inicio1.jpg"
-                alt="Ilustração de uma paciente demonstrando que tomou a vacina">
-            <div class="hidden">
-                <h2>Controle Vacinal</h2>
-                <p>Aqui, há a praticidade de ter controle de vacinas pendentes e a serem
-                    aplicadas</p>
-            </div>
+    
+        <section class="slogan text-center py-5 mt-5 slide-left">
+            <h1 class="titulo display-4 fw-semibold">Carteira Vacinal</h1>
+            <p class="texto-slogan lead">Um jeito simples de ter controle sobre as suas imunizações</p>
         </section>
+    
 
-        <section class="section2">
-            <div class="hidden">
-                <h2>Monitoramento</h2>
+    <div class="container my-5">
+        <div class="row align-items-center mb-5">
+            <div class="col-md-6 slide-left">
+                <img class="img-fluid hidden" src="../img/inicio1.jpg"
+                    alt="Ilustração de uma paciente demonstrando que tomou a vacina">
+            </div>
+            <div class="col-md-6 slide-left">
+                <h2 class="h4">Controle Vacinal</h2>
+                <p>Aqui, há a praticidade de ter controle de vacinas pendentes e a serem aplicadas</p>
+            </div>
+        </div>
+
+        <div class="row align-items-center mb-5">
+            <div class="col-md-6 order-md-2 slide-left">
+                <img class="img-fluid hidden" src="../img/inicio2.jpg" alt="Ilustração de mãe e filha abraçadas">
+            </div>
+            <div class="col-md-6 order-md-1 slide-left">
+                <h2 class="h4">Monitoramento</h2>
                 <p>Monitore as imunizações de perto, protegendo você e sua família</p>
             </div>
-            <img class="hidden" src="../img/inicio2.jpg" alt="Ilustração de mãe e filha abraçadas">
-        </section>
+        </div>
 
-        <section class="section3">
-            <img class="hidden" src="../img/inicio3.jpg" alt="Ilustração de uma consulta médica">
-            <div class="hidden">
-                <h2>Facilidade de Acesso e Compartilhamento</h2>
-                <p>Acesse seu histórico de vacinas a qualquer momento e qualquer lugar tornando
-                    mais fácil o compartilhamento com médicos, escolas e empregadores</p>
+        <div class="row align-items-center mb-5">
+            <div class="col-md-6 slide-left">
+                <img class="img-fluid hidden" src="../img/inicio3.jpg" alt="Ilustração de uma consulta médica">
             </div>
-        </section>
+            <div class="col-md-6 slide-left">
+                <h2 class="h4">Facilidade de Acesso e Compartilhamento</h2>
+                <p>Acesse seu histórico de vacinas a qualquer momento e qualquer lugar tornando mais fácil o
+                    compartilhamento com médicos, escolas e empregadores</p>
+            </div>
+        </div>
 
-        <section class="section4">
-            <div class="hidden">
-                <h2>Educação e Conscientização</h2>
-                <p>Tenha informações sobre cada vacina, seus benefícios e faixa etária
-                    recomendada
-                    para aplicação</p>
+        <div class="row align-items-center mb-5">
+            <div class="col-md-6 order-md-2 slide-left">
+                <img class="img-fluid hidden" src="../img/inicio4.jpg" alt="Ilustração de uma criança tomando vacina">
             </div>
-            <img class="hidden" src="../img/inicio4.jpg" alt="Ilustração de uma criança tomando vacina">
-        </section>
+            <div class="col-md-6 order-md-1 slide-left">
+                <h2 class="h4">Educação e Conscientização</h2>
+                <p>Tenha informações sobre cada vacina, seus benefícios e faixa etária recomendada para aplicação</p>
+            </div>
+        </div>
     </div>
 
     <div id="footerContainer"></div>
@@ -99,6 +87,29 @@
     <div id="modalContainer"></div>
 
     <script>
+        document.addEventListener("DOMContentLoaded", function () {
+    window.scrollTo(0, 0);
+
+    const images = document.querySelectorAll(".slide-left, .slide-righ");
+
+    function handleScroll() {
+        images.forEach((img) => {
+            const imgPosition = img.getBoundingClientRect().top;
+            const imgBottom = img.getBoundingClientRect().bottom;
+            const windowHeight = window.innerHeight;
+
+            if (imgPosition < windowHeight - 100 && imgBottom > 100) {
+                img.classList.add("show");
+            } else {
+                img.classList.remove("show");
+            }
+        });
+    }
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+});
+
         fetch("/components/header.html")
             .then(response => response.text())
             .then(html => {
@@ -121,6 +132,8 @@
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    
 </body>
 
 </html>

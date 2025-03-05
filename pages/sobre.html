@@ -15,12 +15,12 @@
     <title>Sobre</title>
 </head>
 
-<body>
-    <div id="headerContainer"></div>
-    <main class="cabecalho">
+<body style="background-color: #ffffef;">
+    <div id="headerContainer" class="fixed-top"></div>
+    <main class="container mt-5 pt-5">
         <section>
-            <h1 class="titulo">SOBRE</h1>
-            <div class="texto_decoracao">
+            <h1 class="titulo text-center slide-left">Sobre</h1>
+            <div class="texto_decoracao mx-auto slide-left">
                 <p>
                     O projeto tem como objetivo desenvolver a criação de um sistema para gerenciamento das vacinas
                     aplicadas aos membros de uma família. O sistema permitirá o cadastro dos integrantes, registrando
@@ -40,78 +40,188 @@
                     para
                     ingressar no mercado de tecnologia.
                 </p>
-                <div class="apresentacao">
+
+                <section class="tecnologias row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mt-5">
+                    <h2 class="titulo text-center slide-left w-100">Tecnologias Usadas</h2>
+                    
+                    <div class="col slide-left">
+                        <div class="card h-100 text-center">
+                            <img src="/img/java.png" class="card-img-top mx-auto mt-3" alt="Java" style="width: 100px; height: auto;">
+                            <div class="card-body">
+                                <p class="card-text">Java 21</p>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="col slide-left">
+                        <div class="card h-100 text-center">
+                            <img src="/img/maven.png" class="card-img-top mx-auto mt-3" alt="Maven" style="width: 100px; height: auto;">
+                            <div class="card-body">
+                                <p class="card-text">Maven</p>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="col slide-left">
+                        <div class="card h-100 text-center">
+                            <img src="/img/spark.png" class="card-img-top mx-auto mt-3" alt="Spark" style="width: 100px; height: auto;">
+                            <div class="card-body">
+                                <p class="card-text">Spark</p>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="col slide-left">
+                        <div class="card h-100 text-center">
+                            <img src="/img/docker.png" class="card-img-top mx-auto mt-3" alt="Docker" style="width: 100px; height: auto;">
+                            <div class="card-body">
+                                <p class="card-text">Docker</p>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="col slide-left">
+                        <div class="card h-100 text-center">
+                            <img src="/img/html5.png" class="card-img-top mx-auto mt-3" alt="HTML5" style="width: 100px; height: auto;">
+                            <div class="card-body">
+                                <p class="card-text">HTML5</p>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="col slide-left">
+                        <div class="card h-100 text-center">
+                            <img src="/img/css.png" class="card-img-top mx-auto mt-3" alt="CSS" style="width: 100px; height: auto;">
+                            <div class="card-body">
+                                <p class="card-text">CSS</p>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="col slide-left">
+                        <div class="card h-100 text-center">
+                            <img src="/img/javascript.png" class="card-img-top mx-auto mt-3" alt="JavaScript" style="width: 100px; height: auto;">
+                            <div class="card-body">
+                                <p class="card-text">JavaScript</p>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="col slide-left">
+                        <div class="card h-100 text-center">
+                            <img src="/img/bootstrap.png" class="card-img-top mx-auto mt-3" alt="Bootstrap" style="width: 100px; height: auto;">
+                            <div class="card-body">
+                                <p class="card-text">Bootstrap</p>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="col slide-left">
+                        <div class="card h-100 text-center">
+                            <img src="/img/mysql.png" class="card-img-top mx-auto mt-3" alt="MySQL" style="width: 100px; height: auto;">
+                            <div class="card-body">
+                                <p class="card-text">MySQL</p>
+                            </div>
+                        </div>
+                    </div>
+                
+                </section>                
+                
+                <div class="apresentacao slide-left">
                     <p>
                         Conheçam os desenvolvedores responsáveis pela realização deste projeto:
                     </p>
                 </div>
             </div>
-            <section class="equipes">
-                <div class="desenvolvedores">
-                    <h4>Líder Técnico</h4>
-                    <p>Jorge Luís</p>
-                    <img width="200" height="200" src="/img/jorge.jpeg" alt="Foto líder técnico Jorge Luis">
-                    <div class="icones">
-                        <a href="https://www.linkedin.com/in/ojorge-luis" target="_blank"><img width="30" height="30"
-                                src="/img/linkedin.svg"></a>
-                        <a href="https://github.com/Jorgeluisreis" target="_blank"><img width="30" height="30"
-                                src="/img/github.svg"></a>
+            <section class="equipes row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                <div class="col slide-left">
+                    <div class="card h-100 text-center">
+                        <img src="/img/Jorge.jpeg" class="card-img-top rounded-circle mx-auto mt-3" alt="Foto líder técnico Jorge Luis" style="width: 150px; height: 150px;">
+                        <div class="card-body">
+                            <h4 class="card-title">Líder Técnico</h4>
+                            <p class="card-text">Jorge Luís</p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="icones d-flex justify-content-center">
+                                <a href="https://www.linkedin.com/in/ojorge-luis" target="_blank"><img width="30" height="30" src="/img/linkedin.svg"></a>
+                                <a href="https://github.com/Jorgeluisreis" target="_blank"><img width="30" height="30" src="/img/github.svg"></a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="desenvolvedores">
-                    <h4>Desenvolvedor</h4>
-                    <p>David Diniz</p>
-                    <img width="200" height="200" src="/img/David.jpeg" alt="Foto desenvolvedor David Diniz">
-                    <div class="icones">
-                        <a href="https://www.linkedin.com/in/david-diniz-b16488231" target="_blank"><img width="30"
-                                height="30" src="/img/linkedin.svg"></a>
-                        <a href="https://github.com/DavidDinizz" target="_blank"><img width="30" height="30"
-                                src="/img/github.svg"></a>
+                <div class="col slide-left">
+                    <div class="card h-100 text-center">
+                        <img src="/img/David.jpeg" class="card-img-top rounded-circle mx-auto mt-3" alt="Foto desenvolvedor David Diniz" style="width: 150px; height: 150px;">
+                        <div class="card-body">
+                            <h4 class="card-title">Desenvolvedor</h4>
+                            <p class="card-text">David Diniz</p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="icones d-flex justify-content-center">
+                                <a href="https://www.linkedin.com/in/david-diniz-b16488231" target="_blank"><img width="30" height="30" src="/img/linkedin.svg"></a>
+                                <a href="https://github.com/DavidDinizz" target="_blank"><img width="30" height="30" src="/img/github.svg"></a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="desenvolvedores">
-                    <h4>Desenvolvedor</h4>
-                    <p>Aline Maria</p>
-                    <img width="200" height="200" src="/img/Aline.jpeg" alt="Foto desenvolvedor Aline Maria">
-                    <div class="icones">
-                        <a href="https://www.linkedin.com/in/aline-maria-alexandre-gomes-065762213/?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
-                            target="_blank"><img width="30" height="30" src="/img/linkedin.svg"></a>
-                        <a href="https://github.com/AlineGomes10" target="_blank"><img width="30" height="30"
-                                src="/img/github.svg"></a>
+                <div class="col slide-left">
+                    <div class="card h-100 text-center">
+                        <img src="/img/Aline.jpeg" class="card-img-top rounded-circle mx-auto mt-3" alt="Foto desenvolvedor Aline Maria" style="width: 150px; height: 150px;">
+                        <div class="card-body">
+                            <h4 class="card-title">Desenvolvedor</h4>
+                            <p class="card-text">Aline Maria</p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="icones d-flex justify-content-center">
+                                <a href="https://www.linkedin.com/in/aline-maria-alexandre-gomes-065762213/?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank"><img width="30" height="30" src="/img/linkedin.svg"></a>
+                                <a href="https://github.com/AlineGomes10" target="_blank"><img width="30" height="30" src="/img/github.svg"></a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="desenvolvedores">
-                    <h4>Desenvolvedor</h4>
-                    <p>Laís Vieira</p>
-                    <img width="200" height="200" src="/img/Lais.jpg" alt="Foto desenvolvedor Laís Vieira">
-                    <div class="icones">
-                        <a href="https://www.linkedin.com/in/la%C3%ADs-vieira-contato" target="_blank"><img width="30"
-                                height="30" src="/img/linkedin.svg"></a>
-                        <a href="https://github.com/LaisViera085" target="_blank"><img width="30" height="30"
-                                src="/img/github.svg"></a>
+                <div class="col slide-left">
+                    <div class="card h-100 text-center">
+                        <img src="/img/Lais.jpg" class="card-img-top rounded-circle mx-auto mt-3" alt="Foto desenvolvedor Laís Vieira" style="width: 150px; height: 150px;">
+                        <div class="card-body">
+                            <h4 class="card-title">Desenvolvedor</h4>
+                            <p class="card-text">Laís Vieira</p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="icones d-flex justify-content-center">
+                                <a href="https://www.linkedin.com/in/la%C3%ADs-vieira-contato" target="_blank"><img width="30" height="30" src="/img/linkedin.svg"></a>
+                                <a href="https://github.com/LaisViera085" target="_blank"><img width="30" height="30" src="/img/github.svg"></a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="desenvolvedores">
-                    <h4>Desenvolvedor</h4>
-                    <p>Cecília Rodrigues</p>
-                    <img width="200" height="200" src="/img/Cecilia.jpeg"
-                        alt="Foto desenvolvedor Cecília Rodrigues">
-                    <div class="icones">
-                        <a href="https://www.linkedin.com/in/cecilia-martinss" target="_blank"><img width="30"
-                                height="30" src="/img/linkedin.svg"></a>
-                        <a href="https://github.com/cecilia-martins" target="_blank"><img width="30" height="30"
-                                src="/img/github.svg"></a>
+                <div class="col slide-left">
+                    <div class="card h-100 text-center">
+                        <img src="/img/Cecilia.jpeg" class="card-img-top rounded-circle mx-auto mt-3" alt="Foto desenvolvedor Cecília Rodrigues" style="width: 150px; height: 150px;">
+                        <div class="card-body">
+                            <h4 class="card-title">Desenvolvedor</h4>
+                            <p class="card-text">Cecília Rodrigues</p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="icones d-flex justify-content-center">
+                                <a href="https://www.linkedin.com/in/cecilia-martinss" target="_blank"><img width="30" height="30" src="/img/linkedin.svg"></a>
+                                <a href="https://github.com/cecilia-martins" target="_blank"><img width="30" height="30" src="/img/github.svg"></a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="desenvolvedores">
-                    <h4>Desenvolvedor</h4>
-                    <p>Nilson Eduardo</p>
-                    <img width="200" height="200" src="/img/Nilson.jpeg" alt="Foto desenvolvedor Nilson Eduardo">
-                    <div class="icones">
-                        <a href="https://www.linkedin.com/in/nilson-eduardo-0a166168" target="_blank"><img width="30"
-                                height="30" src="/img/linkedin.svg"></a>
-                        <a href="https://github.com/neduardosantos" target="_blank"><img width="30" height="30"
-                                src="/img/github.svg"></a>
+                <div class="col slide-left">
+                    <div class="card h-100 text-center">
+                        <img src="/img/Nilson.jpeg" class="card-img-top rounded-circle mx-auto mt-3" alt="Foto desenvolvedor Nilson Eduardo" style="width: 150px; height: 150px;">
+                        <div class="card-body">
+                            <h4 class="card-title">Desenvolvedor</h4>
+                            <p class="card-text">Nilson Eduardo</p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="icones d-flex justify-content-center">
+                                <a href="https://www.linkedin.com/in/nilson-eduardo-0a166168" target="_blank"><img width="30" height="30" src="/img/linkedin.svg"></a>
+                                <a href="https://github.com/neduardosantos" target="_blank"><img width="30" height="30" src="/img/github.svg"></a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -133,6 +243,28 @@
     <div id="modalContainer"></div>
 
     <script>
+         document.addEventListener("DOMContentLoaded", function () {
+    window.scrollTo(0, 0);
+
+    const images = document.querySelectorAll(".slide-left, .slide-righ");
+
+    function handleScroll() {
+        images.forEach((img) => {
+            const imgPosition = img.getBoundingClientRect().top;
+            const imgBottom = img.getBoundingClientRect().bottom;
+            const windowHeight = window.innerHeight;
+
+            if (imgPosition < windowHeight - 100 && imgBottom > 100) {
+                img.classList.add("show");
+            } else {
+                img.classList.remove("show");
+            }
+        });
+    }
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+});
         fetch("/components/header.html")
             .then(response => response.text())
             .then(html => {
@@ -152,6 +284,8 @@
                 document.getElementById("footerContainer").innerHTML = html;
             })
             .catch(error => console.error("Erro ao carregar o footer:", error));
+
+        
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

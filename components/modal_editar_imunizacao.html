@@ -1,24 +1,20 @@
-<div class="modal fade" id="modalCadastroImunizacao" tabindex="-1" aria-labelledby="modalCadastroImunizacaoLabel" aria-hidden="true">
+<div class="modal fade" id="modalEditarImunizacao" tabindex="-1" aria-labelledby="modalEditarImunizacaoLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalCadastroImunizacaoLabel">Cadastrar Imunização</h5>
+                <h5 class="modal-title" id="modalEditarImunizacaoLabel">Editar Imunização</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
             </div>
             <div class="modal-body">
-                <form id="formCadastroImunizacao" class="container">
+                <form id="formEditarImunizacao" class="container">
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label for="paciente" class="form-label">Paciente</label>
-                            <select class="form-select" id="paciente" required>
-                                <option value="" disabled selected>Selecione o paciente</option>
-                            </select>
+                            <input type="text" class="form-control" id="paciente" readonly>
                         </div>
                         <div class="col-md-6">
                             <label for="vacina" class="form-label">Vacina</label>
-                            <select class="form-select" id="vacina" required>
-                                <option value="" disabled selected>Selecione a vacina - dose</option>
-                            </select>
+                            <input type="text" class="form-control" id="vacina" readonly>
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -48,7 +44,7 @@
                         </div>
                     </div>
                     <div class="d-grid col-6 mx-auto">
-                        <button id="btnCadastrarImunizacao" class="btn btn-success" type="button">Cadastrar</button>
+                        <button id="btnSalvarEdicaoImunizacao" class="btn btn-success" type="button">Salvar</button>
                     </div>
                 </form>
             </div>

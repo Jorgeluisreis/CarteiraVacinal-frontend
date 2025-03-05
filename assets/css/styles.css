@@ -1,51 +1,152 @@
 :root {
     --primary-color: #2a8a21;
     --text-color: white;
-    --background-color: white;
+    --background-color: #ffffef;
+
 }
 
-.home{
-    font-family: Arial, sans-serif;
+
+.home {
+    font-family: 'Poppins', sans-serif;
     background-color: #ffffef;
-;}
+}
 
 body {
     background-color: #ffffef;
-    font-family: Arial, sans-serif;
+    font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
 }
 
-.rodape {
-    position: fixed;
-    left: 0;
-    bottom: 0;
+
+.slogan {
+    font-family: 'Poppins', sans-serif;
+    margin-top: 75px;
+}
+
+
+.slogan p {
+    font-size: 20px;
+
+}
+
+.slide-left {
+    opacity: 0;
+    transform: translateX(-100%);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.slide-right {
+    opacity: 0;
+    transform: translateX(100%);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+.toast-container {
+    z-index: 1060;
+}
+
+#modalCarteiraVacinal {
+    z-index: 1050;
+}
+
+#modalConfirmarExclusaoImunizacao {
+    z-index: 1060;
+}
+
+.modal-backdrop.show {
+    z-index: 1049;
+}
+
+#modalConfirmarExclusaoImunizacao+.modal-backdrop.show {
+    z-index: 1059;
+}
+
+.titulo {
+    text-align: center;
+    margin: 22px auto;
+}
+
+.texto_decoracao {
     width: 100%;
+    max-width: 700px;
+    text-align: center;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.apresentacao {
+    text-align: center;
+    display: flex;
+    margin: auto;
+    width: 50%;
+}
+
+.equipes {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    margin: 50px auto;
+    background-color: #ffffef;
+}
+
+.desenvolvedores-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 30px;
+    margin-top: 20px;
+    justify-items: center;
+    background-color: #ffffef;
+}
+
+.desenvolvedores {
     text-align: center;
     background-color: #f8f8f8;
+    padding: 20px;
+    border-radius: 10px;
+}
 
+.desenvolvedores img {
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.icones a {
+    margin: 0 5px;
+}
+
+.icones img {
+    transition: transform 0.3s;
+}
+
+.icones img:hover {
+    transform: scale(1.2);
 }
 
 .navbar {
     background-color: var(--primary-color);
     padding: 10px 0;
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    z-index: 1000;
 }
 
-.logo{
-    max-width: 55px; 
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+.logo {
+    mix-blend-mode: normal !important;
+    filter: none !important;
+    -webkit-filter: none !important; /* Para garantir compatibilidade com WebKit */
 }
 
 .nav-container {
     display: flex;
     gap: 20px;
-}
-
-.container {
-    padding-bottom: 100px;
 }
 
 .nav-item {
@@ -54,7 +155,6 @@ body {
     font-size: 19px;
     padding: 10px 20px;
     transition: background 0.3s;
-    font-family: Arial, sans-serif;
 }
 
 .nav-item:hover {
@@ -142,144 +242,116 @@ body {
     border-radius: 0;
 }
 
-.titulo {
+.rodape {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    padding: 10px 0;
     text-align: center;
-    margin: 22px auto;
+    width: 100%;
 }
 
-.texto_decoracao {
-    width: 700px;
-    text-align: center;
-    margin: auto;
-    display: flex;
-    flex-direction: column;
+@media (max-width: 768px) {
+    .titulo {
+        margin-top: 40px;
+    }
+
+    .texto_decoracao {
+        padding: 0 15px;
+    }
+
+    .equipes {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .desenvolvedores-container {
+        grid-template-columns: 1fr;
+    }
+
+    .nav-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .nav-item {
+        padding: 10px;
+    }
+
+    .dropdown-content {
+        position: static;
+        box-shadow: none;
+    }
+
+    .table-responsive {
+        font-size: 12px;
+    }
+
+    .table-responsive th,
+    .table-responsive td {
+        padding: 0.5rem;
+    }
+
+    .card {
+        font-size: 14px;
+    }
+
+    .card .card-title {
+        font-size: 16px;
+    }
+
+    .card .card-text {
+        font-size: 14px;
+    }
+
+    .navbar {
+        padding: 5px 0;
+    }
+
+    .navbar-brand {
+        font-size: 16px;
+    }
+
+    .nav-item {
+        font-size: 14px;
+    }
 }
 
-.apresentacao {
-    display: flex;
-    margin: auto;
+@media (min-width: 769px) and (max-width: 992px) {
+    .desenvolvedores-container {
+        grid-template-columns: 1fr 1fr;
 
+    }
+
+    .titulo {
+        margin-top: 80px;
+    }
 }
 
-.equipes {
-    display: flex;
-    justify-content: center;
-    gap: 50px;
-    margin: 50px auto;
+@media (min-width: 993px) {
+    .titulo {
+        margin-top: 100px;
+    }
 }
 
-.desenvolvedores-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 30px;
-    margin-top: 20px;
-    justify-items: center;
-}
 
-.desenvolvedores {
-    text-align: center;
-    background-color: #f8f8f8;
-    padding: 20px;
-    border-radius: 10px;
-}
-
-.desenvolvedores img {
-    border-radius: 50%;
-    margin-bottom: 10px;
-}
-
-.icones a {
-    margin: 0 5px;
-}
-
-.icones img {
-    transition: transform 0.3s;
-}
-
-.icones img:hover {
-    transform: scale(1.2);
-}
-
-.slogan {
-    font-family: Arial, sans-serif;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    margin-top: 75px;
-    gap: 5px;
-}
-
-.slogan h1 {
-    font-size: 50px;
-}
-
-.slogan p {
-    font-size: 20px;
-    margin-bottom: 2%;
-}
-
-.textos h2{
-    font-size: 30px;
-}
-
-.textos p{
-    font-size: 18px;
-}
-
-.section1, .section3 {
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    gap: 20px; 
-    justify-content: flex-start;
-    margin: 5%;
-    padding: 10px;
-}
-
-.section2, .section4 {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    justify-content: flex-end;
-    margin: 5%;
-    padding: 10px;
-}
-
-.hidden {
-    width: 40%;
-    max-width: 630px;
-    border-radius: 2%;
-    opacity: 0;
-    transform: translateX(-100%); 
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-}
-
-.show {
-    opacity: 1;
-    transform: translateX(0); 
-}
-
-.table-center th, .table-center td {
-    text-align: center;
-    vertical-align: middle;
-}
 
 #loading {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100px;
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1051;
 }
 
-#modalCarteiraVacinal {
-    z-index: 1050;
+#carteiraContent {
+    display: none;
 }
-#modalConfirmarExclusaoImunizacao {
-    z-index: 1060;
-}
-.modal-backdrop.show {
-    z-index: 1049;
-}
-#modalConfirmarExclusaoImunizacao + .modal-backdrop.show {
-    z-index: 1059;
+
+.tecnologias {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Reduziu o gap para aproximar os itens */
+    margin: 50px auto;
+    background-color: #ffffef;
 }

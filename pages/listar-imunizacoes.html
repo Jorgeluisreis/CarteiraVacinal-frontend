@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="/img/favicon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Listar Imunizações</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -11,30 +12,38 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
         rel="stylesheet">
 </head>
 
-<body class="home">
+<body class="home d-flex flex-column min-vh-100">
     <div id="headerContainer"></div>
-    <div class="container mt-5">
-        <h1 class="titulo text-center">Listar Imunizações</h1>
-        <div class="search-form mb-4 text-center">
-            <input type="text" id="searchId" class="form-control mb-2" placeholder="Digite o ID" style="max-width: 300px; margin: 0 auto;">
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="checkboxPaciente">
-                <label class="form-check-label" for="checkboxPaciente">Por Paciente</label>
+<div class="container mt-5 flex-grow-1">
+    <h1 class="titulo text-center">Listar Imunizações</h1>
+    <div class="search-form mb-4 text-center">
+        <input type="text" id="searchId" class="form-control mb-5" placeholder="Digite o ID" style="max-width: 300px; margin: 0 auto;">
+        
+        <div class="d-flex justify-content-center align-items-center gap-4">
+            <div class="form-check d-flex align-items-center gap-2">
+                <input class="form-check-input" type="checkbox" id="checkboxPaciente" style="width: 1.375em; height: 1.375em;">
+                <label class="form-check-label mb-0" for="checkboxPaciente">Por Paciente</label>
             </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="checkboxImunizacao">
-                <label class="form-check-label" for="checkboxImunizacao">Por Imunização</label>
+            <div class="form-check d-flex align-items-center gap-2">
+                <input class="form-check-input" type="checkbox" id="checkboxImunizacao" style="width: 1.375em; height: 1.375em;">
+                <label class="form-check-label mb-0" for="checkboxImunizacao">Por Imunização</label>
             </div>
             <button id="btnPesquisarImunizacao" class="btn btn-primary">Pesquisar</button>
         </div>
-        <div id="resultContainer"></div>
     </div>
+    <div id="resultContainer"></div>
+</div>
 
-    <div id="footerContainer"></div>
+
+
+
+
+
+    <div id="footerContainer" class="mt-auto"></div>
     <div id="modalContainer"></div>
 
     <div class="toast-container position-fixed bottom-0 end-0 p-3">
@@ -58,7 +67,7 @@
                     script.src = "/js/scripts.js";
                     script.onload = function () {
                         console.log("Script carregado com sucesso.");
-                        listarImunizacoes(); // Chama a função para listar imunizações ao carregar a página
+                        listarImunizacoes();
                     };
                     document.body.appendChild(script);
                 })
@@ -70,6 +79,27 @@
                     document.getElementById("footerContainer").innerHTML = html;
                 })
                 .catch(error => console.error("Erro ao carregar o footer:", error));
+
+            document.getElementById("btnPesquisarImunizacao").addEventListener("click", function () {
+                const searchId = document.getElementById("searchId").value.trim();
+                const checkboxPaciente = document.getElementById("checkboxPaciente").checked;
+                const checkboxImunizacao = document.getElementById("checkboxImunizacao").checked;
+
+                if (checkboxPaciente && checkboxImunizacao) {
+                    exibirToast("Selecione apenas uma opção de filtro.");
+                    return;
+                }
+
+                if (searchId && checkboxPaciente) {
+                    listarImunizacoesPorPaciente(searchId);
+                } else if (searchId && checkboxImunizacao) {
+                    listarImunizacoesPorId(searchId);
+                } else if (!searchId && !checkboxPaciente && !checkboxImunizacao) {
+                    listarImunizacoes();
+                } else {
+                    exibirToast("Digite um ID e selecione uma opção de filtro.");
+                }
+            });
         });
     </script>
 
