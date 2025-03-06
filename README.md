@@ -19,11 +19,15 @@
   </a> 
 </p>
 
+---
+
 ## CarteiraVacinal - Frontend
 
-O projeto **CarteiraVacinal** é uma iniciativa da Hackathon de 2025 da Turma 4 do **Programa 1000Devs**, organizada pela [mesttra](https://www.mesttra.com/) em parceria com a [Johnson & Johnson Medtech](https://www.jnjmedtech.com/pt-br) e o [Hospital Israelita Albert Einstein](https://www.einstein.br/n/). O Professor [Rogério de Freitas](https://www.linkedin.com/in/rogerio-freitas-ribeiro-690a9712/) organizou o evento com o objetivo de desenvolver uma solução para gerenciamento de vacinas, permitindo o cadastro e acompanhamento das imunizações de pacientes.
+O projeto **CarteiraVacinal** é uma iniciativa da Hackathon de 2025 da Turma 4 do [**Programa 1000Devs**](https://www.jnjmedtech.com/pt-br/patient/1000-devs-talentos-para-o-bem-na-saude), organizada pela [mesttra](https://www.mesttra.com/) em parceria com a [Johnson & Johnson Medtech](https://www.jnjmedtech.com/pt-br) e o [Hospital Israelita Albert Einstein](https://www.einstein.br/n/). O Professor [Rogério de Freitas](https://www.linkedin.com/in/rogerio-freitas-ribeiro-690a9712/) organizou o evento com o objetivo de desenvolver uma solução para gerenciamento de vacinas, permitindo o cadastro e acompanhamento das imunizações de pacientes.
 
 Este repositório contém o **frontend** do projeto, desenvolvido em **HTML, CSS e JavaScript**, com o uso do **Bootstrap** para garantir responsividade e uma interface mais profissional. O frontend foi projetado para consumir a **WebAPI** desenvolvida em **Java e Spark**, disponível clicando [aqui](http://github.com/Jorgeluisreis/CarteiraVacinal-backend/).
+
+---
 
 ## 🎯 Funcionalidades
 
@@ -33,6 +37,8 @@ A interface web permite realizar as seguintes operações:
 * ✅ **Gerenciamento de Imunizações:** Cadastrar, editar e excluir imunizações associadas a um paciente.
 * ✅ **Consulta de Dados:** Exibir informações sobre pacientes e suas vacinas aplicadas.
 
+---
+
 ## 🛠️ Tecnologias Utilizadas
 
 - ![Docker](https://img.shields.io/badge/Docker-blue) - Conteinerização do Frontend como um todo.
@@ -41,6 +47,8 @@ A interface web permite realizar as seguintes operações:
 - ![CSS3](https://img.shields.io/badge/CSS3-blue) - Estilização e layout responsivo.
 - ![JavaScript](https://img.shields.io/badge/JavaScript-yellow) - Interatividade e comunicação com a API.
 - ![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3.3-purple) - Framework para estilização e responsividade.
+
+---
 
 # 📸 Imagens do Frontend
 
@@ -86,6 +94,8 @@ Aqui estão as capturas de tela do frontend do projeto.
   <img src="https://i.imgur.com/FbTEiDu.png" alt="Carteira Vacinal do Paciente">
 </p>
 
+---
+
 ## 👥 Equipe de Desenvolvedores
 
 Abaixo estão os integrantes da equipe **CarteiraVacinal-frontend**. Cada um contribuiu de forma significativa para o sucesso do projeto:
@@ -102,6 +112,7 @@ Abaixo estão os integrantes da equipe **CarteiraVacinal-frontend**. Cada um con
 
 </div>
 
+---
 
 ## 🔨 Como foi o Desenvolvimento ?
 
@@ -150,6 +161,8 @@ Para manter um fluxo de trabalho eficiente e organizado, utilizamos as seguintes
 
 Esse fluxo garantiu um desenvolvimento ágil, organizado e alinhado às boas práticas do mercado.
 
+---
+
 ## 🚀 Como Rodar o Projeto
 
 Siga os passos abaixo para rodar o frontend localmente:
@@ -169,11 +182,12 @@ Siga os passos abaixo para rodar o frontend localmente:
     * Clique com o botão direito e selecione **"Open with Live Server"**.
     O projeto será carregado no navegador. 🚀
 
+---
 
 ## 📜 Licença
 
-Este projeto é de código aberto e está disponível para uso educacional e colaborativo. Consulte o repositório para mais detalhes.
+Este projeto é de código aberto e com a Licença MIT, além de estar disponível para uso educacional e colaborativo. Clique [aqui](https://github.com/Jorgeluisreis/CarteiraVacinal-frontend/tree/development?tab=License-1-ov-file) para saber mais.
 
 ---
 
-💡 Projeto desenvolvido para a Hackathon 2025 do **Programa 1000Devs** 🎯
+💡 Projeto desenvolvido para a Hackathon 2025 do [**Programa 1000Devs**](https://www.jnjmedtech.com/pt-br/patient/1000-devs-talentos-para-o-bem-na-saude) 🎯
