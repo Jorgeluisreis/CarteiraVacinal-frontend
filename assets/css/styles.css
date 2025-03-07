@@ -22,6 +22,16 @@ body {
 .slogan {
     font-family: 'Poppins', sans-serif;
     margin-top: 75px;
+    opacity: 0;
+    transform: translateX(-100%);
+    visibility: hidden;
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.slogan.show {
+    opacity: 1;
+    transform: translateX(0);
+    visibility: visible;
 }
 
 
@@ -42,9 +52,15 @@ body {
     transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }
 
+.slide-top {
+    opacity: 0;
+    transform: translateY(-100%);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
 .show {
     opacity: 1;
-    transform: translateX(0);
+    transform: translateY(0);
 }
 .toast-container {
     z-index: 1060;
@@ -141,7 +157,7 @@ body {
 .logo {
     mix-blend-mode: normal !important;
     filter: none !important;
-    -webkit-filter: none !important; /* Para garantir compatibilidade com WebKit */
+    -webkit-filter: none !important;
 }
 
 .nav-container {
@@ -351,7 +367,7 @@ body {
 .tecnologias {
     display: flex;
     justify-content: center;
-    gap: 20px; /* Reduziu o gap para aproximar os itens */
+    gap: 20px;
     margin: 50px auto;
     background-color: #ffffef;
 }

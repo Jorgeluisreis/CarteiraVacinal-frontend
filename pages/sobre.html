@@ -19,7 +19,7 @@
     <div id="headerContainer" class="fixed-top"></div>
     <main class="container mt-5 pt-5">
         <section>
-            <h1 class="titulo text-center slide-left">Sobre</h1>
+            <h1 class="titulo text-center slide-top">Sobre</h1>
             <div class="texto_decoracao mx-auto slide-left">
                 <p>
                     O projeto tem como objetivo desenvolver a criação de um sistema para gerenciamento das vacinas
@@ -243,28 +243,31 @@
     <div id="modalContainer"></div>
 
     <script>
-         document.addEventListener("DOMContentLoaded", function () {
-    window.scrollTo(0, 0);
+        document.addEventListener("DOMContentLoaded", function () {
+        window.scrollTo(0, 0);
 
-    const images = document.querySelectorAll(".slide-left, .slide-righ");
+        const images = document.querySelectorAll(".slide-right, .slide-left, .slide-top");
+        const observerOptions = {
+            root: null,
+            rootMargin: "0px",
+            threshold: 0.1
+        };
 
-    function handleScroll() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("show");
+                } else {
+                    entry.target.classList.remove("show");
+                }
+            });
+        }, observerOptions);
+
         images.forEach((img) => {
-            const imgPosition = img.getBoundingClientRect().top;
-            const imgBottom = img.getBoundingClientRect().bottom;
-            const windowHeight = window.innerHeight;
-
-            if (imgPosition < windowHeight - 100 && imgBottom > 100) {
-                img.classList.add("show");
-            } else {
-                img.classList.remove("show");
-            }
+            observer.observe(img);
         });
-    }
+    });
 
-    window.addEventListener("scroll", handleScroll);
-    handleScroll();
-});
         fetch("/components/header.html")
             .then(response => response.text())
             .then(html => {
@@ -284,8 +287,6 @@
                 document.getElementById("footerContainer").innerHTML = html;
             })
             .catch(error => console.error("Erro ao carregar o footer:", error));
-
-        
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
