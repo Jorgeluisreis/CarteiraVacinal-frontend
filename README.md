@@ -220,7 +220,7 @@ Esse fluxo garantiu um desenvolvimento ágil, organizado e alinhado às boas pr�
 </div>
 
 <div style="text-align: right; font-size: 0.9em; color: gray;">
-  Dezembro 2024
+  Março 2025
 </div>
 
 ---
@@ -244,7 +244,25 @@ Esse fluxo garantiu um desenvolvimento ágil, organizado e alinhado às boas pr�
 </div>
 
 <div style="text-align: right; font-size: 0.9em; color: gray;">
-  Dezembro 2024
+  Março 2025
+</div>
+
+### **Laís Vieira**
+
+<div style="display: flex; align-items: flex-start; margin-bottom: 20px;">
+  <img src="https://i.imgur.com/anCXscX.jpeg" alt="Laís Vieira" style="width: 70px; height: 70px; border-radius: 50%; margin-right: 15px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
+  <div>
+    <div style="font-weight: bold;">
+      <a href="https://www.linkedin.com/in/la%C3%ADs-vieira-contato" target="_blank">LinkedIn</a>
+    </div>
+    <p>
+      Participar da Hackaton contribuindo na parte do front end foi uma experiência desafiadora pra mim, como iniciante. Mesmo com algumas dificuldades fui pesquisando, revendo algumas aulas do Ivo para me auxiliar também, e ajustando o código para entregar um resultado funcional e de acordo com as orientações presentes no Git. Foi bem legal que pude colocar em prática e aprender um pouco mais sobre metodologia ágil e sobre o Git, e com certeza foi levar isso para o minha vida profissional"
+    </p>
+  </div>
+</div>
+
+<div style="text-align: right; font-size: 0.9em; color: gray;">
+  Março 2025
 </div>
 
 ---
