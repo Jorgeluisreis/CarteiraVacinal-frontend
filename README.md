@@ -96,6 +96,9 @@ Aqui estão as capturas de tela do frontend do projeto.
 
 ---
 
+## 🌎 Como posso ter acesso ao site ?
+  Simples, basta clicar [aqui](https://carteiravacinal.jorgedev.net) para ter acesso ao site em produção, com integração feita e tudo funcionando!
+
 ## 👥 Equipe de Desenvolvedores
 
 Abaixo estão os integrantes da equipe **CarteiraVacinal-frontend**. Cada um contribuiu de forma significativa para o sucesso do projeto:
