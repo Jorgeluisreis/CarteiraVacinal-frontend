@@ -163,6 +163,92 @@ Esse fluxo garantiu um desenvolvimento ágil, organizado e alinhado às boas pr�
 
 ---
 
+## 💬 Depoimentos
+
+### **Jorge Luis**
+
+<div style="display: flex; align-items: flex-start; margin-bottom: 20px;">
+  <img src="https://i.imgur.com/7583zV4.jpeg" alt="Jorge Luis" style="width: 70px; height: 70px; border-radius: 50%; margin-right: 15px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
+  <div>
+    <div style="font-weight: bold;">
+      <a href="https://www.linkedin.com/in/ojorge-luis/" target="_blank">LinkedIn</a>
+    </div>
+    <p>
+      "Gerenciar esse projeto como líder técnico foi um grande desafio, ainda mais o frontend não sendo minha principal "vocação", foi um grande desafio tocar a refatoração de boa parte do código e novas implementações que eu nunca nem tinha feito nesta magnitude. Ampliar meus conhecimentos, absorvendo algo totalmente diferente para poder ajudar e auxiliar os demais, com colaboradores de níveis técnicos diferentes, abordar assuntos como GitFlow e afins foi na realidade um prazer imenso, sinto que consegui ser um bom mentor, corrigir os pontos que estavam em falta e elogiar os que estavam sobrando!"
+    </p>
+  </div>
+</div>
+
+<div style="text-align: right; font-size: 0.9em; color: gray;">
+  Março 2025
+</div>
+
+---
+
+### **Aline Maria**
+
+<div style="display: flex; align-items: flex-start; margin-bottom: 20px;">
+  <img src="https://i.imgur.com/euKnHp7.jpeg" alt="Aline Maria" style="width: 70px; height: 70px; border-radius: 50%; margin-right: 15px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
+  <div>
+    <div style="font-weight: bold;">
+      <a href="https://www.linkedin.com/in/aline-maria-alexandre-gomes-065762213/" target="_blank">LinkedIn</a>
+    </div>
+    <p>
+      "Trabalhar com frontend foi um grande desafio para mim. Lidar com mecanismos que eu não conhecia antes da academia 1000Devs, nesse caso HTML, CSS e GitHub, não só me mostraram minha capacidade de por em prática o básico que eu aprendi, mas como também ir atrás do que ainda não sabia. Durante este hackaton tive maior facilidade em construir o HTML, porém em compensação, o CSS foi uma barreira maior para entender como executar sua aplicação, mas que com um pouco de pesquisa e colaboração dos membros do grupo, consegui auxiliar de alguma forma na estrutura básica. Por fim, o GitHub também foi uma ferramenta que nunca havia utilizado antes, mas que com a ajuda de nosso líder técnico Jorge e um espaço confortável para retirar dúvidas e expor minhas ideias, fui capaz de compreender seu funcionamento e aprender também com meus erros cometidos durante o processo."
+    </p>
+  </div>
+</div>
+
+<div style="text-align: right; font-size: 0.9em; color: gray;">
+  Março 2025
+</div>
+
+---
+
+### **Nilson Eduardo**
+
+<div style="display: flex; align-items: flex-start; margin-bottom: 20px;">
+  <img src="https://i.imgur.com/iWpkIX6.jpeg" alt="Nilson Eduardo" style="width: 70px; height: 70px; border-radius: 50%; margin-right: 15px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
+  <div>
+    <div style="font-weight: bold;">
+      <a href="https://i.imgur.com/iWpkIX6.jpeg/" target="_blank">LinkedIn</a>
+    </div>
+    <p>
+      "Trabalhar neste projeto foi uma experiência incrível, principalmente pelo trabalho em equipe. Desde o início, tivemos que alinhar ideias, dividir tarefas e nos ajudar mutuamente para garantir que tudo saísse como planejado. Enfrentamos desafios, como ajustes na interface e integração com o back-end, mas a colaboração entre todos fez a diferença. A troca de conhecimento e o apoio entre os membros da equipe tornaram o processo mais leve e produtivo. Levo dessa experiência a certeza de que um bom trabalho em equipe faz toda a diferença no desenvolvimento de um projeto"
+    </p>
+  </div>
+</div>
+
+<div style="text-align: right; font-size: 0.9em; color: gray;">
+  Dezembro 2024
+</div>
+
+---
+
+### **David Diniz**
+
+<div style="display: flex; align-items: flex-start; margin-bottom: 20px;">
+  <img src="https://i.imgur.com/ozafpK8.jpeg" alt="David Diniz" style="width: 70px; height: 70px; border-radius: 50%; margin-right: 15px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
+  <div>
+    <div style="font-weight: bold;">
+      <a href="https://www.linkedin.com/in/david-diniz-b16488231" target="_blank">LinkedIn</a>
+    </div>
+    <p>
+      "Participar desse hackathon foi uma experiência incrível e desafiadora. Desde o momento em que anunciaram que desenvolveríamos uma carteira de vacinação digital, senti uma mistura de emoções, entre o nervosismo e a incerteza de que conseguiria dar conta. No entanto, foi preciso enfrentar esse medo. Assim que as responsabilidades foram distribuídas e começamos a codar, tudo se tornou empolgante, e o trabalho fluiu de maneira surpreendente. No final, o resultado foi um verdadeiro sucesso.
+
+  Fiquei responsável pelo desenvolvimento das seções "Sobre" e "Início" do Front-End. Um dos principais desafios que enfrentei foi implementar, com JavaScript, um efeito para revelar dinamicamente os parágrafos e imagens ocultos conforme o usuário rolasse a página com o scroll do mouse. Além disso, era essencial garantir que esses elementos surgissem suavemente e ficassem alinhados ao centro, proporcionando uma experiência mais fluida e intuitiva. Para dominar essa técnica, me aprofundei nos estudos, fiz diversas pesquisas e assisti a vídeos no YouTube. Esse processo não só aprimorou minhas habilidades de desenvolvimento, como também fortaleceu minha capacidade de pesquisa e resolução de problemas, aumentando ainda mais minha confiança.
+
+  Sou muito grato aos meus colegas de equipe pelo apoio e colaboração ao longo do desafio. Foi uma honra trabalhar ao lado de vocês nesse projeto!"
+    </p>
+  </div>
+</div>
+
+<div style="text-align: right; font-size: 0.9em; color: gray;">
+  Dezembro 2024
+</div>
+
+---
+
 ## 🚀 Como Rodar o Projeto
 
 Siga os passos abaixo para rodar o frontend localmente:
