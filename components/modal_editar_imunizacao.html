@@ -1,0 +1,53 @@
+<div class="modal fade" id="modalEditarImunizacao" tabindex="-1" aria-labelledby="modalEditarImunizacaoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalEditarImunizacaoLabel">Editar Imunização</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formEditarImunizacao" class="container">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="paciente" class="form-label">Paciente</label>
+                            <input type="text" class="form-control" id="paciente" readonly>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="vacina" class="form-label">Vacina</label>
+                            <input type="text" class="form-control" id="vacina" readonly>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="dataAplicacao" class="form-label">Data de Aplicação</label>
+                            <input type="date" class="form-control" id="dataAplicacao" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="fabricante" class="form-label">Fabricante</label>
+                            <input type="text" class="form-control" id="fabricante" placeholder="Nome do fabricante">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="lote" class="form-label">Lote</label>
+                            <input type="text" class="form-control" id="lote" placeholder="Número do lote">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="localAplicacao" class="form-label">Local de Aplicação</label>
+                            <input type="text" class="form-control" id="localAplicacao" placeholder="Local de aplicação">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="profissionalAplicador" class="form-label">Profissional Aplicador</label>
+                            <input type="text" class="form-control" id="profissionalAplicador" placeholder="Nome do profissional aplicador">
+                        </div>
+                    </div>
+                    <div class="d-grid col-6 mx-auto">
+                        <button id="btnSalvarEdicaoImunizacao" class="btn btn-success" type="button">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,39 @@
+<div class="modal fade" id="modalEditarPaciente" tabindex="-1" aria-labelledby="modalEditarPacienteLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen-lg-down">
+        <div class="modal-content container mt-5">
+            <div class="modal-header d-flex justify-content-between">
+                <h1 class="modal-title fs">Editar Paciente</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formEditarPaciente">
+                    <div class="form-group mb-3">
+                        <label class="form-label" for="editarNome">Nome</label>
+                        <input class="form-control" type="text" id="editarNome" placeholder="Escreva seu nome completo" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="form-label" for="editarCpf">CPF</label>
+                        <input class="form-control" type="text" id="editarCpf" placeholder="000.000.000-00" maxlength="14" required>
+                    </div>
+                    <div class="row form-group mb-3">
+                        <div class="col">
+                            <label class="form-label" for="editarSexo">Selecione seu sexo:</label>
+                            <select class="form-select" id="editarSexo" name="sexo">
+                                <option value="F">F</option>
+                                <option value="M">M</option>
+                            </select>
+                        </div>
+
+                        <div class="col">
+                            <label class="form-label" for="editarData">Data de nascimento:</label>
+                            <input class="form-control" type="date" name="data" id="editarData" required>
+                        </div>
+                    </div>
+                    <div class="d-grid col-6 mx-auto">
+                        <button id="btnEditarPaciente" class="mb-3 btn btn-success" type="button">Editar Paciente</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

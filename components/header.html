@@ -1,0 +1,39 @@
+<header class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: var(--primary-color);">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/pages/inicio.html">
+            <img class="logo" src="../img/logo.png" alt="Logo Vacina" style="max-width: 55px;">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/pages/inicio.html">Início</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="consultaDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Consulta
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="consultaDropdown">
+                        <li><a class="dropdown-item" href="/pages/listar-paciente.html">Paciente</a></li>
+                        <li><a class="dropdown-item" href="/pages/listar-vacinas.html">Vacinas</a></li>
+                        <li><a class="dropdown-item" href="/pages/listar-imunizacoes.html">Imunizações</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="cadastroDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Cadastro
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="cadastroDropdown">
+                        <li><a class="dropdown-item" href="#" onclick="abrirModalCadastroPaciente(event)">Paciente</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="abrirModalCadastroImunizacao(event)">Imunização</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/pages/sobre.html">Sobre</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</header>
