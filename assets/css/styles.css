@@ -266,6 +266,21 @@ body {
     width: 100%;
 }
 
+.rodape .version {
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.rodape .version a {
+    color: white;
+    text-decoration: none;
+}
+
+.rodape .version a:hover {
+    text-decoration: underline;
+}
+
 @media (max-width: 768px) {
     .titulo {
         margin-top: 40px;
