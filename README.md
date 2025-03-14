@@ -211,7 +211,7 @@ Esse fluxo garantiu um desenvolvimento ágil, organizado e alinhado às boas pr�
   <img src="https://i.imgur.com/iWpkIX6.jpeg" alt="Nilson Eduardo" style="width: 70px; height: 70px; border-radius: 50%; margin-right: 15px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
   <div>
     <div style="font-weight: bold;">
-      <a href="https://i.imgur.com/iWpkIX6.jpeg/" target="_blank">LinkedIn</a>
+      <a href="https://www.linkedin.com/in/nilson-eduardo-0a166168/" target="_blank">LinkedIn</a>
     </div>
     <p>
       "Trabalhar neste projeto foi uma experiência incrível, principalmente pelo trabalho em equipe. Desde o início, tivemos que alinhar ideias, dividir tarefas e nos ajudar mutuamente para garantir que tudo saísse como planejado. Enfrentamos desafios, como ajustes na interface e integração com o back-end, mas a colaboração entre todos fez a diferença. A troca de conhecimento e o apoio entre os membros da equipe tornaram o processo mais leve e produtivo. Levo dessa experiência a certeza de que um bom trabalho em equipe faz toda a diferença no desenvolvimento de um projeto"
